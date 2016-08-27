@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00AAA31D715F6E0001A377 /* customTVC.swift */; };
 		CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA561D7138B4007ADBCF /* AppDelegate.swift */; };
 		CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA581D7138B4007ADBCF /* ViewController.swift */; };
 		CC12DA5C1D7138B4007ADBCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC12DA5A1D7138B4007ADBCF /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC00AAA31D715F6E0001A377 /* customTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = customTVC.swift; path = Custom/customTVC.swift; sourceTree = "<group>"; };
 		CC12DA531D7138B4007ADBCF /* First Class.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "First Class.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC12DA561D7138B4007ADBCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC12DA581D7138B4007ADBCF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				CC12DA561D7138B4007ADBCF /* AppDelegate.swift */,
 				CC12DA581D7138B4007ADBCF /* ViewController.swift */,
 				CC12DA5A1D7138B4007ADBCF /* Main.storyboard */,
+				CC00AAA31D715F6E0001A377 /* customTVC.swift */,
 				CC12DA5D1D7138B4007ADBCF /* Assets.xcassets */,
 				CC12DA5F1D7138B4007ADBCF /* LaunchScreen.storyboard */,
 				CC12DA621D7138B4007ADBCF /* Info.plist */,
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */,
 				CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */,
 				CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */,
 			);
@@ -484,6 +488,7 @@
 				CC12DA7D1D7138B5007ADBCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC12DA7E1D7138B5007ADBCF /* Build configuration list for PBXNativeTarget "First ClassTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +497,7 @@
 				CC12DA801D7138B5007ADBCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CC12DA811D7138B5007ADBCF /* Build configuration list for PBXNativeTarget "First ClassUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +506,7 @@
 				CC12DA831D7138B5007ADBCF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
