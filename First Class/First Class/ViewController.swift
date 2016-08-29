@@ -16,12 +16,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var subtitles = ["Subtitle1", "Subtitle2", "Subtitle3"]
     var images = [UIImage(named: "icon"), UIImage(named: "icon"), UIImage(named: "icon")]
     
-    var dictionary = [
+    var dictionary : NSDictionary = [
         0   : ["Title":"Title_1","Subtitle":"Subtitle_1","Image":"icon"]
         ,1  : ["Title":"Title_2","Subtitle":"Subtitle_2","Image":"icon"]
         ,2  : ["Title":"Title_3","Subtitle":"Subtitle_3","Image":"icon"]
         ,3  : ["Title":"Title_4","Subtitle":"Subtitle_4","Image":"icon"]
-    ] as! NSDictionary
+    ]
     
    
     override func viewDidLoad() {
@@ -57,4 +57,3 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
 }
-
