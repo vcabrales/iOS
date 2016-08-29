@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController {
 
     @IBOutlet weak var myTable: UITableView!
     
@@ -35,6 +35,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
 
+    }
+
+extension ViewController : UITableViewDelegate {
+    
+}
+
+extension ViewController : UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dictionary.allKeys.count
     }
@@ -50,10 +61,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
         /*
-        cell.myImage.image = images[indexPath.row]
-        cell.myTitle.text = titles[indexPath.row]
-        cell.mySubtitle.text = subtitles[indexPath.row]
-        */
+         cell.myImage.image = images[indexPath.row]
+         cell.myTitle.text = titles[indexPath.row]
+         cell.mySubtitle.text = subtitles[indexPath.row]
+         */
         return cell
     }
+
 }
