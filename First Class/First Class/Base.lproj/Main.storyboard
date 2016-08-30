@@ -59,7 +59,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="HHX-RZ-oxS"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="7iJ-zC-TT8"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="nif-ni-hE8"/>
                                 </connections>
                             </tableView>
                         </subviews>
