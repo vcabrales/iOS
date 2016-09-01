@@ -16,17 +16,21 @@ class ViewController: UIViewController {
     var subtitles = ["Subtitle1", "Subtitle2", "Subtitle3"]
     var images = [UIImage(named: "icon"), UIImage(named: "icon"), UIImage(named: "icon")]
     
+ 
     var dictionary : NSDictionary = [
-        0   : ["Title":"Title_1","Subtitle":"Subtitle_1","Image":"icon"]
-        ,1  : ["Title":"Title_2","Subtitle":"Subtitle_2","Image":"icon"]
-        ,2  : ["Title":"Title_3","Subtitle":"Subtitle_3","Image":"icon"]
-        ,3  : ["Title":"Title_4","Subtitle":"Subtitle_4","Image":"icon"]
+        "Section 1"   : ["Title_1"]
+        ,"Section 2"  : ["Title_1","Title_2"]
     ]
-    
+ 
    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //self.myTable.delegate = self
+        //self.myTable.dataSource = self
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,36 +39,47 @@ class ViewController: UIViewController {
     }
 
 
-    }
+}
 
 extension ViewController : UITableViewDelegate {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //let currentCell : customTVC = tableView.cellForRowAtIndexPath(indexPath) as! customTVC
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let sectionName : String = self.dictionary.allKeys[indexPath.section] as! String
+        let cellTitle   : String = (self.dictionary[sectionName] as! [String])[indexPath.row]
+        
+        print("Seleccione celda \(indexPath.row) en la seccion \(cellTitle) ")
+    }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionName : String = self.dictionary.allKeys[section] as! String
+        return sectionName
+    }
 }
 
 extension ViewController : UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return self.dictionary.allKeys.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dictionary.allKeys.count
+        let sectionKey : String = self.dictionary.allKeys[section] as! String
+        let arrayForSection     = self.dictionary[sectionKey]
+        
+        return arrayForSection!.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.myTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! customTVC
         
-        let dicto = dictionary[indexPath.row] as! NSDictionary
-        
-        cell.myImage.image = UIImage(named: dicto["Image"] as! String)
-        cell.myTitle.text = (dicto["Title"] as! String)
-        cell.mySubtitle.text = (dicto["Subtitle"] as! String)
-        
-        
-        /*
-         cell.myImage.image = images[indexPath.row]
-         cell.myTitle.text = titles[indexPath.row]
-         cell.mySubtitle.text = subtitles[indexPath.row]
-         */
+        let sectionKey : String = self.dictionary.allKeys[indexPath.section] as! String
+        let arrayForSection : [String]    = self.dictionary[sectionKey] as! [String]
+
+        cell.myImage.image = UIImage(named : "icon")
+        cell.myTitle.text = arrayForSection[indexPath.row]
+        cell.mySubtitle.text = ""
+
         return cell
     }
 
