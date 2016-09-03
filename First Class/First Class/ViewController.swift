@@ -18,8 +18,8 @@ class ViewController: UIViewController {
     
  
     var dictionary : NSDictionary = [
-        "Section 1"   : ["Title_1"]
-        ,"Section 2"  : ["Title_1","Title_2"]
+        "White Belt"   : ["Conceptos basicos", "Conceptos basicos II", "Frank no vino", "Navegacion basica"]
+        //,"Section 2"  : ["Title_1","Title_2"]
     ]
  
    
@@ -50,6 +50,18 @@ extension ViewController : UITableViewDelegate {
         let cellTitle   : String = (self.dictionary[sectionName] as! [String])[indexPath.row]
         
         print("Seleccione celda \(indexPath.row) en la seccion \(cellTitle) ")
+        
+        
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC
+        
+        controller.titleString = cellTitle
+        
+        
+        self.presentViewController(controller, animated: true, completion: nil)
+        
+        
+        
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

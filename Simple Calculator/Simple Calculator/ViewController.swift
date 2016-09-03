@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         currentNum = 0
         self.myLabel.text = ("\(result)")
         if(sender.titleLabel!.text == "="){
-            result = 0
+            currentNum = result
         }
         currentOp = sender.titleLabel!.text! as String
     }

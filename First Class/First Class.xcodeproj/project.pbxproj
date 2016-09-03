@@ -15,6 +15,8 @@
 		CC12DA611D7138B4007ADBCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC12DA5F1D7138B4007ADBCF /* LaunchScreen.storyboard */; };
 		CC12DA6C1D7138B5007ADBCF /* First_ClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA6B1D7138B5007ADBCF /* First_ClassTests.swift */; };
 		CC12DA771D7138B5007ADBCF /* First_ClassUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA761D7138B5007ADBCF /* First_ClassUITests.swift */; };
+		CC12DAC51D78E562007ADBCF /* textViewerCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DAC41D78E562007ADBCF /* textViewerCVC.swift */; };
+		CC12DACA1D78E6CC007ADBCF /* fourthClass.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC12DAC91D78E6CC007ADBCF /* fourthClass.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		CC12DA721D7138B5007ADBCF /* First ClassUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "First ClassUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC12DA761D7138B5007ADBCF /* First_ClassUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = First_ClassUITests.swift; sourceTree = "<group>"; };
 		CC12DA781D7138B5007ADBCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC12DAC41D78E562007ADBCF /* textViewerCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = textViewerCVC.swift; path = Custom/textViewerCVC.swift; sourceTree = "<group>"; };
+		CC12DAC91D78E6CC007ADBCF /* fourthClass.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = fourthClass.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +103,11 @@
 		CC12DA551D7138B4007ADBCF /* First Class */ = {
 			isa = PBXGroup;
 			children = (
+				CC12DAC81D78E688007ADBCF /* Class Contents */,
 				CC12DA561D7138B4007ADBCF /* AppDelegate.swift */,
-				CC12DA581D7138B4007ADBCF /* ViewController.swift */,
+				CC12DAC61D78E65B007ADBCF /* Main Views */,
 				CC12DA5A1D7138B4007ADBCF /* Main.storyboard */,
-				CC00AAA31D715F6E0001A377 /* customTVC.swift */,
+				CC12DAC71D78E66E007ADBCF /* Custom cells */,
 				CC12DA5D1D7138B4007ADBCF /* Assets.xcassets */,
 				CC12DA5F1D7138B4007ADBCF /* LaunchScreen.storyboard */,
 				CC12DA621D7138B4007ADBCF /* Info.plist */,
@@ -126,6 +131,31 @@
 				CC12DA781D7138B5007ADBCF /* Info.plist */,
 			);
 			path = "First ClassUITests";
+			sourceTree = "<group>";
+		};
+		CC12DAC61D78E65B007ADBCF /* Main Views */ = {
+			isa = PBXGroup;
+			children = (
+				CC12DA581D7138B4007ADBCF /* ViewController.swift */,
+				CC12DAC41D78E562007ADBCF /* textViewerCVC.swift */,
+			);
+			name = "Main Views";
+			sourceTree = "<group>";
+		};
+		CC12DAC71D78E66E007ADBCF /* Custom cells */ = {
+			isa = PBXGroup;
+			children = (
+				CC00AAA31D715F6E0001A377 /* customTVC.swift */,
+			);
+			name = "Custom cells";
+			sourceTree = "<group>";
+		};
+		CC12DAC81D78E688007ADBCF /* Class Contents */ = {
+			isa = PBXGroup;
+			children = (
+				CC12DAC91D78E6CC007ADBCF /* fourthClass.strings */,
+			);
+			name = "Class Contents";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,6 +226,7 @@
 				TargetAttributes = {
 					CC12DA521D7138B4007ADBCF = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = FE55LHMPQG;
 					};
 					CC12DA661D7138B5007ADBCF = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -233,6 +264,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC12DA611D7138B4007ADBCF /* LaunchScreen.storyboard in Resources */,
+				CC12DACA1D78E6CC007ADBCF /* fourthClass.strings in Resources */,
 				CC12DA5E1D7138B4007ADBCF /* Assets.xcassets in Resources */,
 				CC12DA5C1D7138B4007ADBCF /* Main.storyboard in Resources */,
 			);
@@ -260,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */,
+				CC12DAC51D78E562007ADBCF /* textViewerCVC.swift in Sources */,
 				CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */,
 				CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */,
 			);
@@ -405,6 +438,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "First Class/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vcz.First-Class";
@@ -416,6 +450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "First Class/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vcz.First-Class";
