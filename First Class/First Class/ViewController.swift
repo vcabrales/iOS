@@ -12,11 +12,6 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var myTable: UITableView!
     
-    var titles = ["Title1", "Title2", "Title3"]
-    var subtitles = ["Subtitle1", "Subtitle2", "Subtitle3"]
-    var images = [UIImage(named: "icon"), UIImage(named: "icon"), UIImage(named: "icon")]
-    
- 
     var dictionary : NSDictionary = [
         "White Belt"   : ["Conceptos basicos", "Conceptos basicos II", "Frank no vino", "Navegacion basica"]
         //,"Section 2"  : ["Title_1","Title_2"]
@@ -76,8 +71,8 @@ extension ViewController : UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionKey : String = self.dictionary.allKeys[section] as! String
-        let arrayForSection     = self.dictionary[sectionKey]
+        let sectionKey : String = self.dictionary.allKeys[section] as! String //
+        let arrayForSection     = self.dictionary[sectionKey] //White belt, etc...
         
         return arrayForSection!.count
     }
