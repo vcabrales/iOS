@@ -15,12 +15,14 @@ class textViewerCVC: UIViewController {
     @IBOutlet weak var myContent: UITextView!
  
     var titleString : String?
+    var textString : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         myTitle.text = titleString
+        myContent.text = textString
     }
     
     override func didReceiveMemoryWarning() {

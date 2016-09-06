@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreText
 
 class ViewController: UIViewController {
 
@@ -51,10 +52,29 @@ extension ViewController : UITableViewDelegate {
         let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC
         
         controller.titleString = cellTitle
+      
+        if let filepath = NSBundle.mainBundle().pathForResource(cellTitle, ofType: "strings") {
+             do {
+                let contents = try NSString(contentsOfFile: filepath, encoding: NSASCIIStringEncoding) as String
+                controller.textString = contents
+                print(contents)
+            } catch {
+                print("contents could not be loaded")
+            }
+        } else {
+            print("\(cellTitle) not found!")
+        }
+
+       
         
         
-        self.presentViewController(controller, animated: true, completion: nil)
+        //self.presentViewController(controller, animated: true, completion: nil)
         
+        /*
+        let vc = textViewerCVC(nibName: "textViewerCVC", bundle: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
+        */
+        self.navigationController!.pushViewController(controller, animated: true)
         
         
     }

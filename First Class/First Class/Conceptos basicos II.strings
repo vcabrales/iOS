@@ -1,0 +1,9 @@
+/* 
+  secondClass.strings
+  First Class
+
+  Created by Victor Cabrales on 9/3/16.
+  Copyright © 2016 Victor Cabrales. All rights reserved.
+*/
+
+"Ciclo de vida de un objeto - ARC = Automatic Reference Counting antes de eso era manual objeto = nil objeto = release objeto = dealloc referencia a objeto weak strong"
