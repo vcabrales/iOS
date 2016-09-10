@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         "White Belt"   : ["Conceptos basicos", "Conceptos basicos II", "Frank no vino", "Navegacion basica"]
         //,"Section 2"  : ["Title_1","Title_2"]
     ]
- 
+    
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,17 +65,7 @@ extension ViewController : UITableViewDelegate {
             print("\(cellTitle) not found!")
         }
 
-       
-        
-        
-        //self.presentViewController(controller, animated: true, completion: nil)
-        
-        /*
-        let vc = textViewerCVC(nibName: "textViewerCVC", bundle: nil)
-        self.navigationController?.pushViewController(vc, animated: true)
-        */
-        self.navigationController!.pushViewController(controller, animated: true)
-        
+        self.presentViewController(controller, animated: true, completion: nil)
         
     }
     

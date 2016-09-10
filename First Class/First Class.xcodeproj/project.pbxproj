@@ -17,9 +17,9 @@
 		CC12DA771D7138B5007ADBCF /* First_ClassUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA761D7138B5007ADBCF /* First_ClassUITests.swift */; };
 		CC12DAC51D78E562007ADBCF /* textViewerCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DAC41D78E562007ADBCF /* textViewerCVC.swift */; };
 		CC12DACA1D78E6CC007ADBCF /* Navegacion basica.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC12DAC91D78E6CC007ADBCF /* Navegacion basica.strings */; };
-		CC65DA3D1D7B71B90085171F /* Conceptos basicos.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC65DA3C1D7B71B90085171F /* Conceptos basicos.strings */; };
 		CC65DA3F1D7B71CE0085171F /* Frank no vino.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC65DA3E1D7B71CE0085171F /* Frank no vino.strings */; };
 		CC65DA411D7B71E20085171F /* Conceptos basicos II.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC65DA401D7B71E20085171F /* Conceptos basicos II.strings */; };
+		CE5CC9E01D84C73C001BDE41 /* Conceptos basicos.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE5CC9DF1D84C73C001BDE41 /* Conceptos basicos.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,9 +56,9 @@
 		CC12DA781D7138B5007ADBCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC12DAC41D78E562007ADBCF /* textViewerCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = textViewerCVC.swift; path = Custom/textViewerCVC.swift; sourceTree = "<group>"; };
 		CC12DAC91D78E6CC007ADBCF /* Navegacion basica.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Navegacion basica.strings"; sourceTree = "<group>"; };
-		CC65DA3C1D7B71B90085171F /* Conceptos basicos.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Conceptos basicos.strings"; sourceTree = "<group>"; };
 		CC65DA3E1D7B71CE0085171F /* Frank no vino.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Frank no vino.strings"; sourceTree = "<group>"; };
 		CC65DA401D7B71E20085171F /* Conceptos basicos II.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Conceptos basicos II.strings"; sourceTree = "<group>"; };
+		CE5CC9DF1D84C73C001BDE41 /* Conceptos basicos.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Conceptos basicos.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,9 +160,9 @@
 			isa = PBXGroup;
 			children = (
 				CC12DAC91D78E6CC007ADBCF /* Navegacion basica.strings */,
-				CC65DA3C1D7B71B90085171F /* Conceptos basicos.strings */,
 				CC65DA3E1D7B71CE0085171F /* Frank no vino.strings */,
 				CC65DA401D7B71E20085171F /* Conceptos basicos II.strings */,
+				CE5CC9DF1D84C73C001BDE41 /* Conceptos basicos.strings */,
 			);
 			name = "Class Contents";
 			sourceTree = "<group>";
@@ -274,11 +274,11 @@
 			files = (
 				CC65DA411D7B71E20085171F /* Conceptos basicos II.strings in Resources */,
 				CC12DA611D7138B4007ADBCF /* LaunchScreen.storyboard in Resources */,
-				CC65DA3D1D7B71B90085171F /* Conceptos basicos.strings in Resources */,
 				CC65DA3F1D7B71CE0085171F /* Frank no vino.strings in Resources */,
 				CC12DACA1D78E6CC007ADBCF /* Navegacion basica.strings in Resources */,
 				CC12DA5E1D7138B4007ADBCF /* Assets.xcassets in Resources */,
 				CC12DA5C1D7138B4007ADBCF /* Main.storyboard in Resources */,
+				CE5CC9E01D84C73C001BDE41 /* Conceptos basicos.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

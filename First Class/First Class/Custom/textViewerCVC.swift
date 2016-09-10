@@ -33,4 +33,6 @@ class textViewerCVC: UIViewController {
     @IBAction func goBack(){
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
 }
