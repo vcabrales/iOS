@@ -23,12 +23,28 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //self.myTable.delegate = self
-        //self.myTable.dataSource = self
-        
-        
+        let url = NSBundle.mainBundle().URLForResource("menu", withExtension: "json")
+        let data = NSData(contentsOfURL: url!)
+        do {
+            let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+            if let dictionary = object as? [String: AnyObject] {
+                readJSONObject(dictionary)
+            }
+        } catch {
+            print("error serializing JSON: \(error)")
+        }
     }
 
+    func readJSONObject(object: [String: AnyObject]) {
+        guard let menu = object["menu"] as? [[String: AnyObject]] else { return }
+        
+        
+        for section in menu {
+            let name = section["Section"] as? String
+            print(name)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

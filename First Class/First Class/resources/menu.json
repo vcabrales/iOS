@@ -1,0 +1,30 @@
+{
+    "menu":
+        [
+            {
+             "Section": "White Belt"
+            ,"Titles" :
+                [
+                 {
+                    "Title": "Conceptos basicos",
+                 }
+                 ,{
+                    "Title": "Conceptos basicos II",
+                 }
+                 ,{
+                    "Title": "Frank no vino",
+                 }
+                 ,{
+                    "Title": "Navegacion basica",
+                 }
+                ],
+            },
+         {
+         "Section": "Yellow Belt"
+         ,"Titles" :
+         [
+          
+          ],
+         },
+        ],
+}

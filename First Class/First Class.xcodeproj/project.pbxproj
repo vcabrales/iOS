@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		344CF6B01D84CBCD0006115A /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 344CF6AF1D84CBCD0006115A /* menu.json */; };
 		CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00AAA31D715F6E0001A377 /* customTVC.swift */; };
 		CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA561D7138B4007ADBCF /* AppDelegate.swift */; };
 		CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA581D7138B4007ADBCF /* ViewController.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		344CF6AF1D84CBCD0006115A /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = menu.json; path = resources/menu.json; sourceTree = "<group>"; };
 		CC00AAA31D715F6E0001A377 /* customTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = customTVC.swift; path = Custom/customTVC.swift; sourceTree = "<group>"; };
 		CC12DA531D7138B4007ADBCF /* First Class.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "First Class.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC12DA561D7138B4007ADBCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		344CF6B11D84CBD80006115A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				344CF6AF1D84CBCD0006115A /* menu.json */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		CC12DA4A1D7138B4007ADBCF = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +119,7 @@
 		CC12DA551D7138B4007ADBCF /* First Class */ = {
 			isa = PBXGroup;
 			children = (
+				344CF6B11D84CBD80006115A /* Resources */,
 				CC12DAC81D78E688007ADBCF /* Class Contents */,
 				CC12DA561D7138B4007ADBCF /* AppDelegate.swift */,
 				CC12DAC61D78E65B007ADBCF /* Main Views */,
@@ -278,6 +289,7 @@
 				CC12DACA1D78E6CC007ADBCF /* Navegacion basica.strings in Resources */,
 				CC12DA5E1D7138B4007ADBCF /* Assets.xcassets in Resources */,
 				CC12DA5C1D7138B4007ADBCF /* Main.storyboard in Resources */,
+				344CF6B01D84CBCD0006115A /* menu.json in Resources */,
 				CE5CC9E01D84C73C001BDE41 /* Conceptos basicos.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
