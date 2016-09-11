@@ -13,11 +13,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var myTable: UITableView!
     
-    var dictionary : NSDictionary = [
-        "White Belt"   : ["Conceptos basicos", "Conceptos basicos II", "Frank no vino", "Navegacion basica"]
-        //,"Section 2"  : ["Title_1","Title_2"]
-    ]
-    
+    var dictionary : NSMutableDictionary = [:]
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +34,17 @@ class ViewController: UIViewController {
     func readJSONObject(object: [String: AnyObject]) {
         guard let menu = object["menu"] as? [[String: AnyObject]] else { return }
         
-        
         for section in menu {
             let name = section["Section"] as? String
             print(name)
+            let titles = section["Titles"] as? [[String: AnyObject]]
+           
+            var titlesArray = [String]()
+            
+            for title in titles! {
+                titlesArray.append(title["Title"] as! String)
+            }
+            self.dictionary.setValue(titlesArray, forKey: name!)
         }
     }
     
