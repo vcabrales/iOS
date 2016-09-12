@@ -64,26 +64,12 @@ extension ViewController : UITableViewDelegate {
         let sectionName : String = self.dictionary.allKeys[indexPath.section] as! String
         let cellTitle   : String = (self.dictionary[sectionName] as! [String])[indexPath.row]
         
-        print("Seleccione celda \(indexPath.row) en la seccion \(cellTitle) ")
-        
-        
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC
         
-        controller.titleString = cellTitle
-      
-        if let filepath = NSBundle.mainBundle().pathForResource(cellTitle, ofType: "strings") {
-             do {
-                let contents = try NSString(contentsOfFile: filepath, encoding: NSASCIIStringEncoding) as String
-                controller.textString = contents
-                print(contents)
-            } catch {
-                print("contents could not be loaded")
-            }
-        } else {
-            print("\(cellTitle) not found!")
-        }
-
+        controller.file = cellTitle
+        controller.section = sectionName
+        
         self.presentViewController(controller, animated: true, completion: nil)
         
     }
@@ -92,6 +78,8 @@ extension ViewController : UITableViewDelegate {
         let sectionName : String = self.dictionary.allKeys[section] as! String
         return sectionName
     }
+    
+
 }
 
 extension ViewController : UITableViewDataSource {
@@ -119,4 +107,10 @@ extension ViewController : UITableViewDataSource {
         return cell
     }
 
+    @IBAction func addNote(sender: AnyObject) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC
+        
+        self.presentViewController(controller, animated: true, completion: nil)
+    }
 }

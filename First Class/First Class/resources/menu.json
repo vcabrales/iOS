@@ -7,27 +7,25 @@
                 [
                  {
                     "Title": "Conceptos basicos"
-                    ,"Content": "Vimos un chingo de informacion"
                  }
                  ,{
                     "Title": "Conceptos basicos II"
-                    ,"Content": "Vimos un chingo de informacion"
                  }
                  ,{
                     "Title": "Frank no vino"
-                    ,"Content": "Vimos un chingo de informacion"
                  }
                  ,{
                     "Title": "Navegacion basica"
-                    ,"Content": "Vimos un chingo de informacion"
                  }
                 ],
             }
             ,{
-            "Section": "Yellow Belt"
+            "Section": "Test"
             ,"Titles" :
                 [
-          
+                 {
+                 "Title": "test"
+                 }
                 ],
             },
         ],

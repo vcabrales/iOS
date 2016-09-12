@@ -11,18 +11,22 @@ import UIKit
 class textViewerCVC: UIViewController {
 
     
-    @IBOutlet weak var myTitle: UILabel!
     @IBOutlet weak var myContent: UITextView!
- 
-    var titleString : String?
-    var textString : String?
+    @IBOutlet weak var sectionName: UITextField!
+    @IBOutlet weak var fileName: UITextField!
+
+    var file : String?
+    var section : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        myTitle.text = titleString
-        myContent.text = textString
+        self.sectionName.text = section
+        self.fileName.text = file
+
+        readFile()
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -34,5 +38,36 @@ class textViewerCVC: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func saveNote(sender: AnyObject) {
+        let pathForTheFile = getFilePath()
+        
+        do{
+            try self.myContent.text.writeToFile(pathForTheFile, atomically: true, encoding: NSUTF8StringEncoding)
+        }catch{
+            print(error)
+        }
+        // Dismiss the modal controller
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
+    func readFile(){
+        let pathForTheFile = getFilePath()
+        
+        do{
+            let contents = try NSString(contentsOfFile: pathForTheFile, encoding: NSASCIIStringEncoding) as String
+            self.myContent.text = contents
+        }catch{
+            print(error)
+        }
+    }
+    
+    func getFilePath() -> String {
+        var plistPathInDocument:String = String()
+        
+        let rootPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, .UserDomainMask, true)[0]
+        
+        plistPathInDocument = rootPath.stringByAppendingString("\(self.sectionName.text)-\(self.fileName.text).strings")
+        return plistPathInDocument
+
+    }
 }
