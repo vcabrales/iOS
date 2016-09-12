@@ -20,16 +20,89 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         let url = NSBundle.mainBundle().URLForResource("menu", withExtension: "json")
-        let data = NSData(contentsOfURL: url!)
+        
+        if url != nil {
+            readURLFile(url!)
+        }else{
+            createJSONMenu()
+        }
+    }
+    
+    func readURLFile(url: AnyObject){
+    
+        let data = NSData(contentsOfURL: url as! NSURL)
         do {
             let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
             if let dictionary = object as? [String: AnyObject] {
                 readJSONObject(dictionary)
             }
-        } catch {
-            print("error serializing JSON: \(error)")
-        }
+            } catch {
+                print("error serializing JSON: \(error)")
+            }
     }
+    
+    func createJSONMenu(){
+        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+        
+        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
+        let fileManager = NSFileManager.defaultManager()
+        var isDirectory: ObjCBool = false
+        
+        // creating a .json file in the Documents folder
+        if !fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
+            let created = fileManager.createFileAtPath(jsonFilePath.absoluteString, contents: nil, attributes: nil)
+            if created {
+                print("File created ")
+            } else {
+                print("Couldn't create file for some reason")
+            }
+        } else {
+            print("File already exists")
+        }
+        
+        let jsonObject: [String: AnyObject] = [
+            "menu": [
+                "Section": "White Belt"
+                ,"Titles" : [
+                    "Title": "Conceptos basicos",
+                    "Title": "Conceptos basicos II",
+                    "Title": "Frank no vino",
+                    "Title": "Navegacion basica"
+                ]
+    
+            ],
+                "Section": "Test"
+            ,"Titles" : [
+                "Title": "test"
+            ]
+        ]
+        
+        
+        // creating JSON out of the above array
+        var jsonData: NSData!
+        do {
+            jsonData = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: NSJSONWritingOptions())
+            let jsonString = String(data: jsonData, encoding: NSUTF8StringEncoding)
+            print(jsonString)
+        } catch let error as NSError {
+            print("Array to JSON conversion failed: \(error.localizedDescription)")
+        }
+        
+        // Write that JSON to the file created earlier
+        let jsonFilePath2 = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
+        do {
+            let file = try NSFileHandle(forWritingToURL: jsonFilePath2)
+            file.writeData(jsonData)
+            print("JSON data was written to teh file successfully!")
+        } catch let error as NSError {
+            print("Couldn't write to file: \(error.localizedDescription)")
+        }
+        
+        readURLFile(jsonFilePath2)
+    }
+    
+    
 
     func readJSONObject(object: [String: AnyObject]) {
         guard let menu = object["menu"] as? [[String: AnyObject]] else { return }
