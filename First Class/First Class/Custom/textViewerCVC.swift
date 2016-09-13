@@ -17,6 +17,7 @@ class textViewerCVC: UIViewController {
 
     var file : String?
     var section : String?
+    var operation : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,15 @@ class textViewerCVC: UIViewController {
         }catch{
             print(error)
         }
+        
+        if(operation == "Create"){
+            
+        } else if(operation == "Edit") {
+            
+        }
+        
+        operation = ""
+        
         // Dismiss the modal controller
         self.dismissViewControllerAnimated(true, completion: nil)
     }

@@ -48,6 +48,7 @@ extension ViewController : UITableViewDelegate {
         
         controller.file = cellTitle
         controller.section = sectionName
+        controller.operation = "Edit"
         
         self.presentViewController(controller, animated: true, completion: nil)
         
@@ -89,6 +90,8 @@ extension ViewController : UITableViewDataSource {
     @IBAction func addNote(sender: AnyObject) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC
+        
+        controller.operation = "Create"
         
         self.presentViewController(controller, animated: true, completion: nil)
     }
