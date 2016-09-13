@@ -20,7 +20,6 @@ class textViewerCVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         self.sectionName.text = section
         self.fileName.text = file
@@ -66,7 +65,12 @@ class textViewerCVC: UIViewController {
         
         let rootPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, .UserDomainMask, true)[0]
         
-        plistPathInDocument = rootPath.stringByAppendingString("\(self.sectionName.text)-\(self.fileName.text).strings")
+        if self.sectionName.text != nil && self.sectionName.text != ""{
+            plistPathInDocument = rootPath.stringByAppendingString("\(self.sectionName.text)-\(self.fileName.text).strings")
+        }else{
+            let seccion = "Pruebas"
+            plistPathInDocument = rootPath.stringByAppendingString("\(seccion)-\(self.fileName.text).strings")
+        }
         return plistPathInDocument
 
     }

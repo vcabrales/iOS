@@ -20,6 +20,7 @@
 		CC12DACA1D78E6CC007ADBCF /* Navegacion basica.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC12DAC91D78E6CC007ADBCF /* Navegacion basica.strings */; };
 		CC65DA3F1D7B71CE0085171F /* Frank no vino.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC65DA3E1D7B71CE0085171F /* Frank no vino.strings */; };
 		CC65DA411D7B71E20085171F /* Conceptos basicos II.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC65DA401D7B71E20085171F /* Conceptos basicos II.strings */; };
+		CE521A161D8784AF008A8EAD /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE521A151D8784AF008A8EAD /* Utilities.swift */; };
 		CE5CC9E01D84C73C001BDE41 /* Conceptos basicos.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE5CC9DF1D84C73C001BDE41 /* Conceptos basicos.strings */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		CC12DAC91D78E6CC007ADBCF /* Navegacion basica.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Navegacion basica.strings"; sourceTree = "<group>"; };
 		CC65DA3E1D7B71CE0085171F /* Frank no vino.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Frank no vino.strings"; sourceTree = "<group>"; };
 		CC65DA401D7B71E20085171F /* Conceptos basicos II.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Conceptos basicos II.strings"; sourceTree = "<group>"; };
+		CE521A151D8784AF008A8EAD /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = resources/Utilities.swift; sourceTree = "<group>"; };
 		CE5CC9DF1D84C73C001BDE41 /* Conceptos basicos.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = "Conceptos basicos.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +93,7 @@
 		344CF6B11D84CBD80006115A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE521A151D8784AF008A8EAD /* Utilities.swift */,
 				344CF6AF1D84CBCD0006115A /* menu.json */,
 			);
 			name = Resources;
@@ -315,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE521A161D8784AF008A8EAD /* Utilities.swift in Sources */,
 				CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */,
 				CC12DAC51D78E562007ADBCF /* textViewerCVC.swift in Sources */,
 				CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */,
