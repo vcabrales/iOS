@@ -47,7 +47,7 @@ class Utilities{
     }
     
     //This Function is to read our URL with our JSONMenu
-    static func readURLFile(url: AnyObject){
+    static func readURLFile(url: AnyObject, Action: String){
         
         let data = NSData(contentsOfURL: url as! NSURL)
         do {
@@ -57,6 +57,12 @@ class Utilities{
             }
         } catch {
             print("error serializing JSON: \(error)")
+        }
+        
+        if(Action == "Edit"){
+        
+        }else if (Action == "Delete"){
+        
         }
     }
     
@@ -77,7 +83,7 @@ class Utilities{
             }
             self.dictionary.setValue(titlesArray, forKey: name!)
             
-            parseDictionary(self.dictionary)
+            //parseDictionary(self.dictionary)
         }
     }
     

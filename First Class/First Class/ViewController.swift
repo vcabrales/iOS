@@ -16,13 +16,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let url = NSBundle.mainBundle().URLForResource("menu", withExtension: "json")
+        let menuPath = NSBundle.mainBundle().URLForResource("menu", withExtension: "json")
         
-        //This logic verify if the JSON menu exists.
-        if url != nil {
-            Utilities.readURLFile(url!)
-        }else{
-            //Utilities.createJSONMenu()
+        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+        
+        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
+        let fileManager = NSFileManager.defaultManager()
+        
+        if fileManager.fileExistsAtPath(jsonFilePath.absoluteString) {
+            Utilities.readURLFile(menuPath!, Action: "read")
         }
         
     }
