@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         if url != nil {
             Utilities.readURLFile(url!)
         }else{
-            Utilities.createJSONMenu()
+            //Utilities.createJSONMenu()
         }
         
     }

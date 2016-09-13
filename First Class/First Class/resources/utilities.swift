@@ -13,11 +13,11 @@ class Utilities{
     static var dictionary : NSMutableDictionary = [:]
     
     //This Function is to create our JSONMenu
-    static func createJSONMenu(){
+    static func createJSONMenu(jsonData: NSData){
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
         let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
         
-        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
+        var jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
         let fileManager = NSFileManager.defaultManager()
         var isDirectory: ObjCBool = false
         
@@ -33,46 +33,17 @@ class Utilities{
             print("File already exists")
         }
         
-        
-        let jsonObject: [String: AnyObject] =
-            ["menu": [
-                "Section": "White Belt"
-                ,"Titles" : [
-                    "Title": "Conceptos basicos",
-                    "Title": "Conceptos basicos II",
-                    "Title": "Frank no vino",
-                    "Title": "Navegacion basica"
-                ]
-                
-                ],
-             "Section": "Test"
-                ,"Titles" : [
-                    "Title": "test"
-                ]
-        ]
-        
-        
-        // creating JSON out of the above array
-        var jsonData: NSData!
-        do {
-            jsonData = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: NSJSONWritingOptions())
-            let jsonString = String(data: jsonData, encoding: NSUTF8StringEncoding)
-            print(jsonString)
-        } catch let error as NSError {
-            print("Array to JSON conversion failed: \(error.localizedDescription)")
-        }
-        
         // Write that JSON to the file created earlier
-        let jsonFilePath2 = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
+        jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
         do {
-            let file = try NSFileHandle(forWritingToURL: jsonFilePath2)
+            let file = try NSFileHandle(forWritingToURL: jsonFilePath)
             file.writeData(jsonData)
             print("JSON data was written to teh file successfully!")
         } catch let error as NSError {
             print("Couldn't write to file: \(error.localizedDescription)")
         }
         
-        readURLFile(jsonFilePath2)
+        //readURLFile(jsonFilePath)
     }
     
     //This Function is to read our URL with our JSONMenu
@@ -89,6 +60,8 @@ class Utilities{
         }
     }
     
+    
+    //This function reads a JSONObject
     static func readJSONObject(object: [String: AnyObject]) {
         guard let menu = object["menu"] as? [[String: AnyObject]] else { return }
         
@@ -103,6 +76,24 @@ class Utilities{
                 titlesArray.append(title["Title"] as! String)
             }
             self.dictionary.setValue(titlesArray, forKey: name!)
+            
+            parseDictionary(self.dictionary)
         }
+    }
+    
+    //Parse NSDictionary to JSON Object
+    static func parseDictionary(dictionaryA: NSDictionary){
+        var jsonData = NSData()
+        
+        do {
+            jsonData = try NSJSONSerialization.dataWithJSONObject(dictionaryA, options: NSJSONWritingOptions.PrettyPrinted)
+            // here "jsonData" is the dictionary encoded in JSON data
+            print(jsonData)
+        } catch let error as NSError {
+            print(error)
+        }
+        
+        createJSONMenu(jsonData)
+
     }
 }
