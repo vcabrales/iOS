@@ -48,7 +48,12 @@ class textViewerCVC: UIViewController {
         }
         
         if(operation == "Create"){
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller : ViewController = storyBoard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
             
+            controller.dictionary.setValue(self.fileName.text, forKey: self.sectionName.text!)
+            
+            controller.reloadData()
         } else if(operation == "Edit") {
             
         }
@@ -75,12 +80,7 @@ class textViewerCVC: UIViewController {
         
         let rootPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, .UserDomainMask, true)[0]
         
-        if self.sectionName.text != nil && self.sectionName.text != ""{
-            plistPathInDocument = rootPath.stringByAppendingString("\(self.sectionName.text)-\(self.fileName.text).strings")
-        }else{
-            let seccion = "Pruebas"
-            plistPathInDocument = rootPath.stringByAppendingString("\(seccion)-\(self.fileName.text).strings")
-        }
+        plistPathInDocument = rootPath.stringByAppendingString("\(self.sectionName.text)-\(self.fileName.text).strings")
         return plistPathInDocument
 
     }
