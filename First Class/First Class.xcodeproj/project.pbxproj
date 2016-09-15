@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3486263E1D87A5A8005F4E2E /* menu1.json in Resources */ = {isa = PBXBuildFile; fileRef = 3486263D1D87A5A8005F4E2E /* menu1.json */; };
+		3486263E1D87A5A8005F4E2E /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 3486263D1D87A5A8005F4E2E /* menu.json */; };
 		CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00AAA31D715F6E0001A377 /* customTVC.swift */; };
 		CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA561D7138B4007ADBCF /* AppDelegate.swift */; };
 		CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA581D7138B4007ADBCF /* ViewController.swift */; };
@@ -42,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3486263D1D87A5A8005F4E2E /* menu1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = menu1.json; path = ../../../../.Trash/menu1.json; sourceTree = "<group>"; };
+		3486263D1D87A5A8005F4E2E /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = menu.json; path = ../../../../.Trash/menu.json; sourceTree = "<group>"; };
 		CC00AAA31D715F6E0001A377 /* customTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = customTVC.swift; path = Custom/customTVC.swift; sourceTree = "<group>"; };
 		CC12DA531D7138B4007ADBCF /* First Class.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "First Class.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC12DA561D7138B4007ADBCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 		344CF6B11D84CBD80006115A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3486263D1D87A5A8005F4E2E /* menu1.json */,
+				3486263D1D87A5A8005F4E2E /* menu.json */,
 				CE521A151D8784AF008A8EAD /* Utilities.swift */,
 			);
 			name = Resources;
@@ -292,7 +292,7 @@
 				CC12DACA1D78E6CC007ADBCF /* Navegacion basica.strings in Resources */,
 				CC12DA5E1D7138B4007ADBCF /* Assets.xcassets in Resources */,
 				CC12DA5C1D7138B4007ADBCF /* Main.storyboard in Resources */,
-				3486263E1D87A5A8005F4E2E /* menu1.json in Resources */,
+				3486263E1D87A5A8005F4E2E /* menu.json in Resources */,
 				CE5CC9E01D84C73C001BDE41 /* Conceptos basicos.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

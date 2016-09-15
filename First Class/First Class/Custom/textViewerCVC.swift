@@ -53,16 +53,16 @@ class textViewerCVC: UIViewController {
             
             let controller = self.presentingViewController as! ViewController
             var titlesArray : [String]
-            if controller.dictionary[self.sectionName.text!] != nil {
-                titlesArray = controller.dictionary[self.sectionName.text!] as! [String]
+            if Utilities.dictionary[self.sectionName.text!] != nil {
+                titlesArray = Utilities.dictionary[self.sectionName.text!] as! [String]
             } else {
                 titlesArray = [String]()
             }
 
             titlesArray.append(self.fileName.text!)
-            controller.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
+            Utilities.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
             controller.reloadData()
-            controller.createMenu()
+            Utilities.createMenu()
         } else if(operation == "Edit") {
             
         }

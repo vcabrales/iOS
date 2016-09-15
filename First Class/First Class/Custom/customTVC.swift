@@ -15,24 +15,39 @@ class customTVC: UITableViewCell {
     @IBOutlet weak var myTitle: UILabel!
     @IBOutlet weak var mySubtitle: UILabel!
     
+    var section : String?
+    var file :String?
+    
     @IBAction func Delete(sender: AnyObject) {
-        let File = "/" + myTitle.text! + ".strings"
-        var path = "/Users/user/Desktop/Swift/iOS/iOS/First Class/First Class"
-        path.appendContentsOf(File)
+        var titlesArray : [String]
+        titlesArray = [String]()
         
+        let oldTitlesArray = Utilities.dictionary[section!] as! [String]
         
-        //if let filepath = NSBundle.mainBundle().pathForResource(File, ofType: "strings") {
-            //print(filepath)
+        for title in oldTitlesArray {
+            if title != myTitle.text {
+                titlesArray.append(title)
+            }
+        }
+        
+        Utilities.dictionary.setValue(titlesArray, forKey: section!)
+        
+        var isDirectory: ObjCBool = false
+        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("\(myTitle.text).strings")
+        let fileManager = NSFileManager.defaultManager()
+        
+        // creating a .json file in the Documents folder
+        if !fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
+            let url = NSURL(fileURLWithPath: jsonFilePath.absoluteString)
             do {
-                let fileManager = NSFileManager.defaultManager()
-                try fileManager.removeItemAtPath(path)
+             try fileManager.removeItemAtURL(url)
+            } catch {
+                print(error)
             }
-                catch let error as NSError {
-                print("Ooops! Something went wrong: \(error)")
-            }
-        //} else {
-        //    print("\(File) not found!")
-        //}
+        }
+        
         
     }
     

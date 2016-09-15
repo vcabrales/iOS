@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var myTable: UITableView!
     
-    var dictionary : NSMutableDictionary = [:]
+    //var dictionary : NSMutableDictionary = [:]
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,59 +72,10 @@ class ViewController: UIViewController {
                 titlesArray.append(title["Title"] as! String)
             }
             
-            self.dictionary.setValue(titlesArray, forKey: name!)
+            Utilities.dictionary.setValue(titlesArray, forKey: name!)
         }
     }
-    
-    func createMenu(){
-        var menu : [[String: AnyObject]] = []
         
-        for section in self.dictionary.allKeys {
-            var titles : [[String: AnyObject]] = []
-            let arrayForSection : [String]    = self.dictionary[section as! String] as! [String]
-            
-            for title in arrayForSection {
-                let t : [String : AnyObject] = [
-                    "Title" : title
-                ]
-                titles.append(t)
-            }
-            
-            let s : [String : AnyObject] = [
-                "Section" : section as! String
-                ,"Titles" : titles
-            ]
-            
-            menu.append(s)
-        }
-        
-        let jsonObject: [String: AnyObject] = [
-            "menu": menu
-        ]
-        
-        // creating JSON out of the above array
-        var jsonData: NSData!
-        do {
-            jsonData = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: NSJSONWritingOptions())
-            let jsonString = String(data: jsonData, encoding: NSUTF8StringEncoding)
-            print(jsonString)
-        } catch let error as NSError {
-            print("Array to JSON conversion failed: \(error.localizedDescription)")
-        }
-        
-        // Write that JSON to the file created earlier
-        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
-        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
-        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
-        do {
-            let file = try NSFileHandle(forWritingToURL: jsonFilePath)
-            file.writeData(jsonData)
-            print("JSON data was written to teh file successfully!")
-        } catch let error as NSError {
-            print("Couldn't write to file: \(error.localizedDescription)")
-        }
-    }
-    
     func reloadData(){
         self.myTable.reloadData()
     }
@@ -141,8 +92,8 @@ extension ViewController : UITableViewDelegate {
         //let currentCell : customTVC = tableView.cellForRowAtIndexPath(indexPath) as! customTVC
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let sectionName : String = self.dictionary.allKeys[indexPath.section] as! String
-        let cellTitle   : String = (self.dictionary[sectionName] as! [String])[indexPath.row]
+        let sectionName : String = Utilities.dictionary.allKeys[indexPath.section] as! String
+        let cellTitle   : String = (Utilities.dictionary[sectionName] as! [String])[indexPath.row]
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC
@@ -157,7 +108,7 @@ extension ViewController : UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sectionName : String = self.dictionary.allKeys[section] as! String
+        let sectionName : String = Utilities.dictionary.allKeys[section] as! String
         return sectionName
     }
     
@@ -166,12 +117,12 @@ extension ViewController : UITableViewDelegate {
 
 extension ViewController : UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.dictionary.allKeys.count
+        return Utilities.dictionary.allKeys.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionKey : String = self.dictionary.allKeys[section] as! String //
-        let arrayForSection     = self.dictionary[sectionKey] //White belt, etc...
+        let sectionKey : String = Utilities.dictionary.allKeys[section] as! String //
+        let arrayForSection     = Utilities.dictionary[sectionKey] //White belt, etc...
         
         return arrayForSection!.count
     }
@@ -179,16 +130,18 @@ extension ViewController : UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.myTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! customTVC
         
-        let sectionKey : String = self.dictionary.allKeys[indexPath.section] as! String
-        let arrayForSection : [String]    = self.dictionary[sectionKey] as! [String]
+        let sectionKey : String = Utilities.dictionary.allKeys[indexPath.section] as! String
+        let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
 
         cell.myImage.image = UIImage(named : "icon")
         cell.myTitle.text = arrayForSection[indexPath.row]
         cell.mySubtitle.text = ""
+        cell.section = sectionKey
+        cell.file = arrayForSection[indexPath.row]
 
         return cell
     }
-
+    
     @IBAction func addNote(sender: AnyObject) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC

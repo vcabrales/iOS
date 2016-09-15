@@ -102,4 +102,45 @@ class Utilities{
         createJSONMenu(jsonData)
 
     }
+    
+    static func createMenu(){
+        var menu : [[String: AnyObject]] = []
+        
+        for section in self.dictionary.allKeys {
+            var titles : [[String: AnyObject]] = []
+            let arrayForSection : [String]    = self.dictionary[section as! String] as! [String]
+            
+            for title in arrayForSection {
+                let t : [String : AnyObject] = [
+                    "Title" : title
+                ]
+                titles.append(t)
+            }
+            
+            let s : [String : AnyObject] = [
+                "Section" : section as! String
+                ,"Titles" : titles
+            ]
+            
+            menu.append(s)
+        }
+        
+        let jsonObject: [String: AnyObject] = [
+            "menu": menu
+        ]
+        
+        // creating JSON out of the above array
+        var jsonData: NSData!
+        do {
+            jsonData = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: NSJSONWritingOptions())
+            let jsonString = String(data: jsonData, encoding: NSUTF8StringEncoding)
+            print(jsonString)
+        } catch let error as NSError {
+            print("Array to JSON conversion failed: \(error.localizedDescription)")
+        }
+        
+        createJSONMenu(jsonData)
+    }
+
+
 }
