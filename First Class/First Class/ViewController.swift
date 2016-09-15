@@ -19,15 +19,38 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        if let url = NSBundle.mainBundle().URLForResource("menu", withExtension: "json") {
-            let data = NSData(contentsOfURL: url)
-            do {
-                let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-                if let dictionary = object as? [String: AnyObject] {
-                    readJSONObject(dictionary)
+        
+        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+        
+        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
+        let fileManager = NSFileManager.defaultManager()
+        
+        if fileManager.fileExistsAtPath(jsonFilePath.absoluteString) {
+            let data = NSData(contentsOfURL: jsonFilePath)
+            if data != nil {
+                do {
+                    let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                    if let dictionary = object as? [String: AnyObject] {
+                        readJSONObject(dictionary)
+                    }
+                } catch {
+                    print("error serializing JSON: \(error)")
                 }
-            } catch {
-                print("error serializing JSON: \(error)")
+            }
+        } else {
+            var isDirectory: ObjCBool = false
+            
+            // creating a .json file in the Documents folder
+            if !fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
+                let created = fileManager.createFileAtPath(jsonFilePath.absoluteString, contents: nil, attributes: nil)
+                if created {
+                    print("File created ")
+                } else {
+                    print("Couldn't create file for some reason")
+                }
+            } else {
+                print("File already exists")
             }
         }
         
@@ -50,27 +73,7 @@ class ViewController: UIViewController {
     }
     
     func createMenu(){
-        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
-        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
-        
-        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
-        let fileManager = NSFileManager.defaultManager()
-        var isDirectory: ObjCBool = false
-        
-        // creating a .json file in the Documents folder
-        if !fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
-            let created = fileManager.createFileAtPath(jsonFilePath.absoluteString, contents: nil, attributes: nil)
-            if created {
-                print("File created ")
-            } else {
-                print("Couldn't create file for some reason")
-            }
-        } else {
-            print("File already exists")
-        }
-
-        var menu : [[String: AnyObject]] = [
-        ]
+        var menu : [[String: AnyObject]] = []
         
         for section in self.dictionary.allKeys {
             var titles : [[String: AnyObject]] = []
@@ -106,6 +109,9 @@ class ViewController: UIViewController {
         }
         
         // Write that JSON to the file created earlier
+        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
         do {
             let file = try NSFileHandle(forWritingToURL: jsonFilePath)
             file.writeData(jsonData)
@@ -139,6 +145,8 @@ extension ViewController : UITableViewDelegate {
         
         controller.file = cellTitle
         controller.section = sectionName
+        
+        //controller.parentViewController = self
         
         self.presentViewController(controller, animated: true, completion: nil)
         

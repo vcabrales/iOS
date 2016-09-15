@@ -44,16 +44,25 @@ class textViewerCVC: UIViewController {
         do{
             try self.myContent.text.writeToFile(pathForTheFile, atomically: true, encoding: NSUTF8StringEncoding)
         }catch{
-            print(error)
+            //print(error)
         }
         
         if(operation == "Create"){
-            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller : ViewController = storyBoard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
+            //let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            //let controller : ViewController = storyBoard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
             
-            controller.dictionary.setValue(self.fileName.text, forKey: self.sectionName.text!)
-            
+            let controller = self.presentingViewController as! ViewController
+            var titlesArray : [String]
+            if controller.dictionary[self.sectionName.text!] != nil {
+                titlesArray = controller.dictionary[self.sectionName.text!] as! [String]
+            } else {
+                titlesArray = [String]()
+            }
+
+            titlesArray.append(self.fileName.text!)
+            controller.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
             controller.reloadData()
+            controller.createMenu()
         } else if(operation == "Edit") {
             
         }
