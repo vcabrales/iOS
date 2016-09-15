@@ -19,27 +19,31 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        
-        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
-        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
-        
-        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
-        let fileManager = NSFileManager.defaultManager()
-        
-        if fileManager.fileExistsAtPath(jsonFilePath.absoluteString) {
-            let data = NSData(contentsOfURL: jsonFilePath)
-            if data != nil {
-                do {
-                    let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-                    if let dictionary = object as? [String: AnyObject] {
-                        readJSONObject(dictionary)
+        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first {
+            let path = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("menu.json")
+            
+            //reading
+            do {
+                
+                let data = NSData(contentsOfURL: path)
+                if data != nil {
+                    do {
+                        let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                        if let dictionary = object as? [String: AnyObject] {
+                            readJSONObject(dictionary)
+                        }
+                    } catch {
+                        print("error serializing JSON: \(error)")
                     }
-                } catch {
-                    print("error serializing JSON: \(error)")
                 }
             }
         } else {
             var isDirectory: ObjCBool = false
+            
+            let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+            let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+            let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
+            let fileManager = NSFileManager.defaultManager()
             
             // creating a .json file in the Documents folder
             if !fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
