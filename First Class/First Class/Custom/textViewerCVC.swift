@@ -25,7 +25,9 @@ class textViewerCVC: UIViewController {
         self.sectionName.text = section
         self.fileName.text = file
 
-        readFile()
+        if operation != "Create" {
+            readFile()
+        }
 
     }
     
@@ -44,13 +46,10 @@ class textViewerCVC: UIViewController {
         do{
             try self.myContent.text.writeToFile(pathForTheFile, atomically: true, encoding: NSUTF8StringEncoding)
         }catch{
-            //print(error)
+            print(error)
         }
         
         if(operation == "Create"){
-            //let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            //let controller : ViewController = storyBoard.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
-            
             let controller = self.presentingViewController as! ViewController
             var titlesArray : [String]
             if Utilities.dictionary[self.sectionName.text!] != nil {
@@ -61,6 +60,7 @@ class textViewerCVC: UIViewController {
 
             titlesArray.append(self.fileName.text!)
             Utilities.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
+            print(Utilities.dictionary)
             controller.reloadData()
             Utilities.createMenu()
         } else if(operation == "Edit") {
@@ -89,7 +89,8 @@ class textViewerCVC: UIViewController {
         
         let rootPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, .UserDomainMask, true)[0]
         
-        plistPathInDocument = rootPath.stringByAppendingString("\(self.sectionName.text)-\(self.fileName.text).strings")
+        plistPathInDocument = rootPath.stringByAppendingString("/" + (self.fileName.text!) + ".strings")
+        
         return plistPathInDocument
 
     }

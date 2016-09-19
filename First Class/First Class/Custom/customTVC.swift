@@ -35,14 +35,17 @@ class customTVC: UITableViewCell {
         var isDirectory: ObjCBool = false
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
         let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
-        let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("\(myTitle.text).strings")
+        let FilePath = documentsDirectoryPath.URLByAppendingPathComponent("\(myTitle.text!).strings")
         let fileManager = NSFileManager.defaultManager()
         
-        // creating a .json file in the Documents folder
-        if !fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
-            let url = NSURL(fileURLWithPath: jsonFilePath.absoluteString)
+        // creating a .string file in the Documents folder
+        if fileManager.fileExistsAtPath(FilePath.absoluteString, isDirectory: &isDirectory) {
+            let url = NSURL(fileURLWithPath: FilePath.absoluteString)
             do {
              try fileManager.removeItemAtURL(url)
+                Utilities.dictionary.removeObjectForKey(titlesArray)
+                print(Utilities.dictionary)
+                Utilities.createMenu()
             } catch {
                 print(error)
             }
