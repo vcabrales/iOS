@@ -9,7 +9,7 @@
 import UIKit
 import CoreText
 
-class ViewController: UIViewController {
+class ViewController: UIViewController{
 
     @IBOutlet weak var myTable: UITableView!
     
@@ -84,6 +84,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 
 }
 
@@ -112,6 +113,56 @@ extension ViewController : UITableViewDelegate {
         return sectionName
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            
+            // handle delete (by removing the data from your array and updating the tableview)
+            var isDirectory: ObjCBool = false
+            let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
+            let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+            
+            let sectionKey : String = Utilities.dictionary.allKeys[indexPath.section] as! String
+            let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
+            
+            let FilePath = documentsDirectoryPath.URLByAppendingPathComponent("\(arrayForSection[indexPath.row]).strings")
+            let fileManager = NSFileManager.defaultManager()
+            
+            // creating a .string file in the Documents folder
+            if fileManager.fileExistsAtPath(FilePath.absoluteString, isDirectory: &isDirectory) {
+                let url = NSURL(fileURLWithPath: FilePath.absoluteString)
+                do {
+                    try fileManager.removeItemAtURL(url)
+                    
+                    var titlesArray : [String]
+                    titlesArray = [String]()
+                    
+                    let oldTitlesArray = arrayForSection
+                    
+                    if oldTitlesArray.count == 1 {
+                        Utilities.dictionary.removeObjectForKey(sectionKey)
+                    } else {
+                        for title in oldTitlesArray {
+                            if title != arrayForSection[indexPath.row] {
+                                titlesArray.append(title)
+                            }
+                        }
+                        Utilities.dictionary.setValue(titlesArray, forKey: sectionKey)
+                    }
+                    
+                    print(Utilities.dictionary)
+                    Utilities.createMenu()
+                    self.updateTableView()
+                } catch {
+                    print(error)
+                }
+            }
+
+        }
+    }
 
 }
 
@@ -138,6 +189,7 @@ extension ViewController : UITableViewDataSource {
         cell.mySubtitle.text = ""
         cell.section = sectionKey
         cell.file = arrayForSection[indexPath.row]
+        cell.delegate = self
 
         return cell
     }
@@ -148,5 +200,13 @@ extension ViewController : UITableViewDataSource {
         controller.operation = "Create"
         
         self.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    
+}
+
+extension ViewController : NoteProtocol{
+    func updateTableView() {
+        self.myTable.reloadData()
     }
 }

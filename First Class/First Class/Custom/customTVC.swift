@@ -15,23 +15,12 @@ class customTVC: UITableViewCell {
     @IBOutlet weak var myTitle: UILabel!
     @IBOutlet weak var mySubtitle: UILabel!
     
+    var delegate : NoteProtocol?
+    
     var section : String?
     var file :String?
     
     @IBAction func Delete(sender: AnyObject) {
-        var titlesArray : [String]
-        titlesArray = [String]()
-        
-        let oldTitlesArray = Utilities.dictionary[section!] as! [String]
-        
-        for title in oldTitlesArray {
-            if title != myTitle.text {
-                titlesArray.append(title)
-            }
-        }
-        
-        Utilities.dictionary.setValue(titlesArray, forKey: section!)
-        
         var isDirectory: ObjCBool = false
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
         let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
@@ -43,9 +32,26 @@ class customTVC: UITableViewCell {
             let url = NSURL(fileURLWithPath: FilePath.absoluteString)
             do {
              try fileManager.removeItemAtURL(url)
-                Utilities.dictionary.removeObjectForKey(titlesArray)
+                
+                var titlesArray : [String]
+                titlesArray = [String]()
+                
+                let oldTitlesArray = Utilities.dictionary[section!] as! [String]
+                
+                if oldTitlesArray.count == 1 {
+                    Utilities.dictionary.removeObjectForKey(section!)
+                } else {
+                    for title in oldTitlesArray {
+                        if title != myTitle.text {
+                            titlesArray.append(title)
+                        }
+                    }
+                    Utilities.dictionary.setValue(titlesArray, forKey: section!)
+                }
+                
                 print(Utilities.dictionary)
                 Utilities.createMenu()
+                delegate?.updateTableView()
             } catch {
                 print(error)
             }

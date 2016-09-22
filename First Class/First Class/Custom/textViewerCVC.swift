@@ -63,8 +63,6 @@ class textViewerCVC: UIViewController {
             print(Utilities.dictionary)
             controller.reloadData()
             Utilities.createMenu()
-        } else if(operation == "Edit") {
-            
         }
         
         operation = ""

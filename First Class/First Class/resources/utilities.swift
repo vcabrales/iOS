@@ -10,7 +10,7 @@ import Foundation
 
 class Utilities{
     
-    static var dictionary : NSMutableDictionary = [:]
+    static var dictionary : NSMutableDictionary = NSMutableDictionary()
     
     //This Function is to create our JSONMenu
     static func createJSONMenu(jsonData: NSData){
@@ -30,7 +30,14 @@ class Utilities{
                 print("Couldn't create file for some reason")
             }
         } else {
-            print("File already exists")
+            do {
+                print("File already exists")
+                let url = NSURL(fileURLWithPath: jsonFilePath.absoluteString)
+                try fileManager.removeItemAtURL(url)
+                fileManager.createFileAtPath(jsonFilePath.absoluteString, contents: nil, attributes: nil)
+            } catch {
+                print(error)
+            }
         }
         
         // Write that JSON to the file created earlier
