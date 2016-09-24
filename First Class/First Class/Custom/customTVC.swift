@@ -15,8 +15,6 @@ class customTVC: UITableViewCell {
     @IBOutlet weak var myTitle: UILabel!
     @IBOutlet weak var mySubtitle: UILabel!
     
-    var delegate : NoteProtocol?
-    
     var section : String?
     var file :String?
     

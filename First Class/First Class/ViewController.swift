@@ -153,9 +153,8 @@ extension ViewController : UITableViewDelegate {
                         Utilities.dictionary.setValue(titlesArray, forKey: sectionKey)
                     }
                     
-                    print(Utilities.dictionary)
                     Utilities.createMenu()
-                    self.updateTableView()
+                    self.myTable.reloadData()
                 } catch {
                     print(error)
                 }
@@ -189,7 +188,6 @@ extension ViewController : UITableViewDataSource {
         cell.mySubtitle.text = ""
         cell.section = sectionKey
         cell.file = arrayForSection[indexPath.row]
-        cell.delegate = self
 
         return cell
     }
@@ -203,10 +201,4 @@ extension ViewController : UITableViewDataSource {
     }
     
     
-}
-
-extension ViewController : NoteProtocol{
-    func updateTableView() {
-        self.myTable.reloadData()
-    }
 }
