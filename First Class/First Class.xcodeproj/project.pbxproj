@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		341D83681D96264700D7454C /* Utilities2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341D83671D96264700D7454C /* Utilities2.swift */; };
 		CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00AAA31D715F6E0001A377 /* customTVC.swift */; };
 		CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA561D7138B4007ADBCF /* AppDelegate.swift */; };
 		CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA581D7138B4007ADBCF /* ViewController.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		341D83671D96264700D7454C /* Utilities2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities2.swift; path = resources/Utilities2.swift; sourceTree = "<group>"; };
 		CC00AAA31D715F6E0001A377 /* customTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = customTVC.swift; path = Custom/customTVC.swift; sourceTree = "<group>"; };
 		CC12DA531D7138B4007ADBCF /* First Class.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "First Class.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC12DA561D7138B4007ADBCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				CE521A151D8784AF008A8EAD /* Utilities.swift */,
+				341D83671D96264700D7454C /* Utilities2.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				CE521A161D8784AF008A8EAD /* Utilities.swift in Sources */,
 				CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */,
 				CC12DAC51D78E562007ADBCF /* textViewerCVC.swift in Sources */,
+				341D83681D96264700D7454C /* Utilities2.swift in Sources */,
 				CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */,
 				CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */,
 			);

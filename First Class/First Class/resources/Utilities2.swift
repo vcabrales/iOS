@@ -1,5 +1,5 @@
 //
-//  utilities.swift
+//  Utilities2.swift
 //  First Class
 //
 //  Created by Miguel Beltran on 12/09/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Utilities{
+class Utilities2{
     
     static var dictionary : NSMutableDictionary = NSMutableDictionary()
     
@@ -72,9 +72,9 @@ class Utilities{
         }
         
         if(Action == "Edit"){
-        
+            
         }else if (Action == "Delete"){
-        
+            
         }
     }
     
@@ -112,7 +112,7 @@ class Utilities{
         }
         
         createJSONMenu(jsonData)
-
+        
     }
     
     static func createMenu(){
@@ -153,6 +153,6 @@ class Utilities{
         
         createJSONMenu(jsonData)
     }
-
-
+    
+    
 }
