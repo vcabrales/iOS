@@ -1,5 +1,5 @@
 //
-//  Utilities2.swift
+//  Utilities.swift
 //  First Class
 //
 //  Created by Miguel Beltran on 12/09/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Utilities2{
+class Utilities{
     
     static var dictionary : NSMutableDictionary = NSMutableDictionary()
     
