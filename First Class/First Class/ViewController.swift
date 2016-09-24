@@ -37,14 +37,11 @@ class ViewController: UIViewController{
                         print("error serializing JSON: \(error)")
                     }
                 }else {
-                    var isDirectory: ObjCBool = false
-                    
-                    let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
-                    let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
-                    let jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
+                    let jsonFilePath = Utilities.getFilePath("menu.json")
                     let fileManager = NSFileManager.defaultManager()
                     
                     // creating a .json file in the Documents folder
+                    var isDirectory: ObjCBool = false
                     if !fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
                         let created = fileManager.createFileAtPath(jsonFilePath.absoluteString, contents: nil, attributes: nil)
                         if created {
@@ -121,19 +118,16 @@ extension ViewController : UITableViewDelegate {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
             
             // handle delete (by removing the data from your array and updating the tableview)
-            var isDirectory: ObjCBool = false
-            let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
-            let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
-            
             let sectionKey : String = Utilities.dictionary.allKeys[indexPath.section] as! String
             let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
             
-            let FilePath = documentsDirectoryPath.URLByAppendingPathComponent("\(arrayForSection[indexPath.row]).strings")
+            let filePath = Utilities.getFilePath("\(arrayForSection[indexPath.row]).strings")
             let fileManager = NSFileManager.defaultManager()
             
             // creating a .string file in the Documents folder
-            if fileManager.fileExistsAtPath(FilePath.absoluteString, isDirectory: &isDirectory) {
-                let url = NSURL(fileURLWithPath: FilePath.absoluteString)
+            var isDirectory: ObjCBool = false
+            if fileManager.fileExistsAtPath(filePath.absoluteString, isDirectory: &isDirectory) {
+                let url = NSURL(fileURLWithPath: filePath.absoluteString)
                 do {
                     try fileManager.removeItemAtURL(url)
                     
