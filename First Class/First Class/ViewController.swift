@@ -186,8 +186,6 @@ extension ViewController : UITableViewDataSource {
         cell.myImage.image = UIImage(named : "icon")
         cell.myTitle.text = arrayForSection[indexPath.row]
         cell.mySubtitle.text = ""
-        cell.section = sectionKey
-        cell.file = arrayForSection[indexPath.row]
 
         return cell
     }
