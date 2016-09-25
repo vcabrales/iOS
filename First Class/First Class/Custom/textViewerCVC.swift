@@ -11,6 +11,7 @@ import UIKit
 class textViewerCVC: UIViewController {
 
     
+    @IBOutlet weak var MyScrollView: UIScrollView!
     @IBOutlet weak var myContent: UITextView!
     @IBOutlet weak var sectionName: UITextField!
     @IBOutlet weak var fileName: UITextField!
@@ -21,6 +22,7 @@ class textViewerCVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        sectionName.becomeFirstResponder()
         
         self.sectionName.text = section
         self.fileName.text = file
@@ -92,4 +94,48 @@ class textViewerCVC: UIViewController {
         return plistPathInDocument
 
     }
+}
+
+extension textViewerCVC : UITextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let nextTage = textField.tag + 1;
+        
+        if(nextTage == 1){
+            textField.superview?.viewWithTag(nextTage)?.becomeFirstResponder()
+        }else if (nextTage == 2){
+            myContent.becomeFirstResponder()
+        }else{
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+    
+    
+}
+
+extension textViewerCVC : UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        let containerText = textView.text
+        
+        if(containerText == "Your Text Here..."){
+            textView.text.removeAll()
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            saveNote("Create" as AnyObject)
+        }
+        return true
+    }
+
 }

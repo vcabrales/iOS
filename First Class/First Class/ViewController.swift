@@ -12,12 +12,14 @@ import CoreText
 class ViewController: UIViewController{
 
     @IBOutlet weak var myTable: UITableView!
+    @IBOutlet weak var myScrollview: UIScrollView!
     
     //var dictionary : NSMutableDictionary = [:]
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        myScrollview.contentSize.height = 1000
         
         if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first
         {
@@ -127,7 +129,6 @@ extension ViewController : UITableViewDataSource {
 
         cell.myImage.image = UIImage(named : "icon")
         cell.myTitle.text = arrayForSection[(indexPath as NSIndexPath).row]
-        cell.mySubtitle.text = ""
 
         return cell
     }
@@ -194,4 +195,10 @@ extension ViewController : UITableViewDataSource {
     }
     
     
+}
+
+extension ViewController : UIScrollViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("test")
+    }
 }

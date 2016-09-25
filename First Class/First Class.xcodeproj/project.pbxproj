@@ -11,7 +11,7 @@
 		CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00AAA31D715F6E0001A377 /* customTVC.swift */; };
 		CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA561D7138B4007ADBCF /* AppDelegate.swift */; };
 		CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA581D7138B4007ADBCF /* ViewController.swift */; };
-		CC12DA5C1D7138B4007ADBCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC12DA5A1D7138B4007ADBCF /* Main.storyboard */; };
+		CC12DA5C1D7138B4007ADBCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC12DA5A1D7138B4007ADBCF /* Main.storyboard */; settings = {ASSET_TAGS = (1, ); }; };
 		CC12DA5E1D7138B4007ADBCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC12DA5D1D7138B4007ADBCF /* Assets.xcassets */; };
 		CC12DA611D7138B4007ADBCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC12DA5F1D7138B4007ADBCF /* LaunchScreen.storyboard */; };
 		CC12DA6C1D7138B5007ADBCF /* First_ClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA6B1D7138B5007ADBCF /* First_ClassTests.swift */; };
@@ -240,6 +240,10 @@
 		CC12DA4B1D7138B4007ADBCF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					0,
+					1,
+				);
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Victor Cabrales";
