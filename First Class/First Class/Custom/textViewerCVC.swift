@@ -37,14 +37,14 @@ class textViewerCVC: UIViewController {
     }
 
     @IBAction func goBack(){
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func saveNote(sender: AnyObject) {
+    @IBAction func saveNote(_ sender: AnyObject) {
         let pathForTheFile = getFilePath()
         
         do{
-            try self.myContent.text.writeToFile(pathForTheFile, atomically: true, encoding: NSUTF8StringEncoding)
+            try self.myContent.text.write(toFile: pathForTheFile, atomically: true, encoding: String.Encoding.utf8)
         }catch{
             print(error)
         }
@@ -68,14 +68,14 @@ class textViewerCVC: UIViewController {
         operation = ""
         
         // Dismiss the modal controller
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
     func readFile(){
         let pathForTheFile = getFilePath()
         
         do{
-            let contents = try NSString(contentsOfFile: pathForTheFile, encoding: NSASCIIStringEncoding) as String
+            let contents = try NSString(contentsOfFile: pathForTheFile, encoding: String.Encoding.ascii.rawValue) as String
             self.myContent.text = contents
         }catch{
             print(error)
@@ -85,9 +85,9 @@ class textViewerCVC: UIViewController {
     func getFilePath() -> String {
         var plistPathInDocument:String = String()
         
-        let rootPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, .UserDomainMask, true)[0]
+        let rootPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, .userDomainMask, true)[0]
         
-        plistPathInDocument = rootPath.stringByAppendingString("/" + (self.fileName.text!) + ".strings")
+        plistPathInDocument = rootPath + ("/" + (self.fileName.text!) + ".strings")
         
         return plistPathInDocument
 

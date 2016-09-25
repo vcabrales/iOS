@@ -12,33 +12,33 @@ class Utilities{
     
     static var dictionary : NSMutableDictionary = NSMutableDictionary()
     
-    static func getFilePath(file : String) -> NSURL {
-        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
-        let documentsDirectoryPath = NSURL(string: documentsDirectoryPathString)!
+    static func getFilePath(_ file : String) -> URL {
+        let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+        let documentsDirectoryPath = URL(string: documentsDirectoryPathString)!
         
-        let filePath = documentsDirectoryPath.URLByAppendingPathComponent(file)
+        let filePath = documentsDirectoryPath.appendingPathComponent(file)
         return filePath
     }
     
     
     //This Function is to create our JSONMenu
-    static func createJSONMenu(jsonData: NSData){
+    static func createJSONMenu(_ jsonData: Data){
         let jsonFilePath = getFilePath("menu.json")
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
         var isDirectory: ObjCBool = false
         
         // creating a .json file in the Documents folder
-        if fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
+        if fileManager.fileExists(atPath: jsonFilePath.absoluteString, isDirectory: &isDirectory) {
             do {
                 print("File already exists")
-                let url = NSURL(fileURLWithPath: jsonFilePath.absoluteString)
-                try fileManager.removeItemAtURL(url)
+                let url = URL(fileURLWithPath: jsonFilePath.absoluteString)
+                try fileManager.removeItem(at: url)
             } catch {
                 print(error)
             }
         }
         
-        let created = fileManager.createFileAtPath(jsonFilePath.absoluteString, contents: nil, attributes: nil)
+        let created = fileManager.createFile(atPath: jsonFilePath.absoluteString, contents: nil, attributes: nil)
         if created {
             print("File created ")
         } else {
@@ -48,8 +48,8 @@ class Utilities{
         // Write that JSON to the file created earlier
         //jsonFilePath = documentsDirectoryPath.URLByAppendingPathComponent("menu.json")
         do {
-            let file = try NSFileHandle(forWritingToURL: jsonFilePath)
-            file.writeData(jsonData)
+            let file = try FileHandle(forWritingTo: jsonFilePath)
+            file.write(jsonData)
             print("JSON data was written to teh file successfully!")
         } catch let error as NSError {
             print("Couldn't write to file: \(error.localizedDescription)")
@@ -59,11 +59,11 @@ class Utilities{
     }
     
     //This Function is to read our URL with our JSONMenu
-    static func readURLFile(url: AnyObject, Action: String){
+    static func readURLFile(_ url: AnyObject, Action: String){
         
-        let data = NSData(contentsOfURL: url as! NSURL)
+        let data = try? Data(contentsOf: url as! URL)
         do {
-            let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+            let object = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
             if let dictionary = object as? [String: AnyObject] {
                 readJSONObject(dictionary)
             }
@@ -80,7 +80,7 @@ class Utilities{
     
     
     //This function reads a JSONObject
-    static func readJSONObject(object: [String: AnyObject]) {
+    static func readJSONObject(_ object: [String: AnyObject]) {
         guard let menu = object["menu"] as? [[String: AnyObject]] else { return }
         
         for section in menu {
@@ -100,11 +100,11 @@ class Utilities{
     }
     
     //Parse NSDictionary to JSON Object
-    static func parseDictionary(dictionaryA: NSDictionary){
-        var jsonData = NSData()
+    static func parseDictionary(_ dictionaryA: NSDictionary){
+        var jsonData = Data()
         
         do {
-            jsonData = try NSJSONSerialization.dataWithJSONObject(dictionaryA, options: NSJSONWritingOptions.PrettyPrinted)
+            jsonData = try JSONSerialization.data(withJSONObject: dictionaryA, options: JSONSerialization.WritingOptions.prettyPrinted)
             // here "jsonData" is the dictionary encoded in JSON data
             print(jsonData)
         } catch let error as NSError {
@@ -124,28 +124,28 @@ class Utilities{
             
             for title in arrayForSection {
                 let t : [String : AnyObject] = [
-                    "Title" : title
+                    "Title" : title as AnyObject
                 ]
                 titles.append(t)
             }
             
             let s : [String : AnyObject] = [
-                "Section" : section as! String
-                ,"Titles" : titles
+                "Section" : section as! String as AnyObject
+                ,"Titles" : titles as AnyObject
             ]
             
             menu.append(s)
         }
         
         let jsonObject: [String: AnyObject] = [
-            "menu": menu
+            "menu": menu as AnyObject
         ]
         
         // creating JSON out of the above array
-        var jsonData: NSData!
+        var jsonData: Data!
         do {
-            jsonData = try NSJSONSerialization.dataWithJSONObject(jsonObject, options: NSJSONWritingOptions())
-            let jsonString = String(data: jsonData, encoding: NSUTF8StringEncoding)
+            jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions())
+            let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
             print(jsonString)
         } catch let error as NSError {
             print("Array to JSON conversion failed: \(error.localizedDescription)")

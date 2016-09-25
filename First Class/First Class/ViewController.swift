@@ -19,17 +19,17 @@ class ViewController: UIViewController{
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        if let dir = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true).first
+        if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first
         {
-            let path = NSURL(fileURLWithPath: dir).URLByAppendingPathComponent("menu.json")
+            let path = URL(fileURLWithPath: dir).appendingPathComponent("menu.json")
             
             //reading
             do {
                 
-                let data = NSData(contentsOfURL: path)
+                let data = try? Data(contentsOf: path)
                 if data != nil {
                     do {
-                        let object = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                        let object = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
                         if let dictionary = object as? [String: AnyObject] {
                             readJSONObject(dictionary)
                         }
@@ -38,12 +38,12 @@ class ViewController: UIViewController{
                     }
                 }else {
                     let jsonFilePath = Utilities.getFilePath("menu.json")
-                    let fileManager = NSFileManager.defaultManager()
+                    let fileManager = FileManager.default
                     
                     // creating a .json file in the Documents folder
                     var isDirectory: ObjCBool = false
-                    if !fileManager.fileExistsAtPath(jsonFilePath.absoluteString, isDirectory: &isDirectory) {
-                        let created = fileManager.createFileAtPath(jsonFilePath.absoluteString, contents: nil, attributes: nil)
+                    if !fileManager.fileExists(atPath: jsonFilePath.absoluteString, isDirectory: &isDirectory) {
+                        let created = fileManager.createFile(atPath: jsonFilePath.absoluteString, contents: nil, attributes: nil)
                         if created {
                             print("File created ")
                         } else {
@@ -57,7 +57,7 @@ class ViewController: UIViewController{
         }
     }
 
-    func readJSONObject(object: [String: AnyObject]) {
+    func readJSONObject(_ object: [String: AnyObject]) {
         guard let menu = object["menu"] as? [[String: AnyObject]] else { return }
         
         for section in menu {
@@ -86,50 +86,77 @@ class ViewController: UIViewController{
 }
 
 extension ViewController : UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let currentCell : customTVC = tableView.cellForRowAtIndexPath(indexPath) as! customTVC
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let sectionName : String = Utilities.dictionary.allKeys[indexPath.section] as! String
-        let cellTitle   : String = (Utilities.dictionary[sectionName] as! [String])[indexPath.row]
+        let sectionName : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
+        let cellTitle   : String = (Utilities.dictionary[sectionName] as! [String])[(indexPath as NSIndexPath).row]
         
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC
+        let controller : textViewerCVC = storyBoard.instantiateViewController(withIdentifier: "textViewerCVC") as! textViewerCVC
         
         controller.file = cellTitle
         controller.section = sectionName
         
         //controller.parentViewController = self
         
-        self.presentViewController(controller, animated: true, completion: nil)
+        self.present(controller, animated: true, completion: nil)
         
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+}
+
+extension ViewController : UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return Utilities.dictionary.allKeys.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionKey : String = Utilities.dictionary.allKeys[section] as! String //
+        let arrayForSection     = Utilities.dictionary[sectionKey] //White belt, etc...
+        
+        return (arrayForSection! as AnyObject).count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.myTable.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! customTVC
+        
+        let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
+        let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
+
+        cell.myImage.image = UIImage(named : "icon")
+        cell.myTitle.text = arrayForSection[(indexPath as NSIndexPath).row]
+        cell.mySubtitle.text = ""
+
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let sectionName : String = Utilities.dictionary.allKeys[section] as! String
         return sectionName
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    private func tableView(ableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
             
             // handle delete (by removing the data from your array and updating the tableview)
-            let sectionKey : String = Utilities.dictionary.allKeys[indexPath.section] as! String
+            let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
             let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
             
-            let filePath = Utilities.getFilePath("\(arrayForSection[indexPath.row]).strings")
-            let fileManager = NSFileManager.defaultManager()
+            let filePath = Utilities.getFilePath("\(arrayForSection[(indexPath as NSIndexPath).row]).strings")
+            let fileManager = FileManager.default
             
             // creating a .string file in the Documents folder
             var isDirectory: ObjCBool = false
-            if fileManager.fileExistsAtPath(filePath.absoluteString, isDirectory: &isDirectory) {
-                let url = NSURL(fileURLWithPath: filePath.absoluteString)
+            if fileManager.fileExists(atPath: filePath.absoluteString, isDirectory: &isDirectory) {
+                let url = URL(fileURLWithPath: filePath.absoluteString)
                 do {
-                    try fileManager.removeItemAtURL(url)
+                    try fileManager.removeItem(at: url)
                     
                     var titlesArray : [String]
                     titlesArray = [String]()
@@ -137,10 +164,10 @@ extension ViewController : UITableViewDelegate {
                     let oldTitlesArray = arrayForSection
                     
                     if oldTitlesArray.count == 1 {
-                        Utilities.dictionary.removeObjectForKey(sectionKey)
+                        Utilities.dictionary.removeObject(forKey: sectionKey)
                     } else {
                         for title in oldTitlesArray {
-                            if title != arrayForSection[indexPath.row] {
+                            if title != arrayForSection[(indexPath as NSIndexPath).row] {
                                 titlesArray.append(title)
                             }
                         }
@@ -153,43 +180,17 @@ extension ViewController : UITableViewDelegate {
                     print(error)
                 }
             }
-
+            
         }
     }
 
-}
-
-extension ViewController : UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return Utilities.dictionary.allKeys.count
-    }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionKey : String = Utilities.dictionary.allKeys[section] as! String //
-        let arrayForSection     = Utilities.dictionary[sectionKey] //White belt, etc...
-        
-        return arrayForSection!.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.myTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! customTVC
-        
-        let sectionKey : String = Utilities.dictionary.allKeys[indexPath.section] as! String
-        let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
-
-        cell.myImage.image = UIImage(named : "icon")
-        cell.myTitle.text = arrayForSection[indexPath.row]
-        cell.mySubtitle.text = ""
-
-        return cell
-    }
-    
-    @IBAction func addNote(sender: AnyObject) {
+    @IBAction func addNote(_ sender: AnyObject) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller : textViewerCVC = storyBoard.instantiateViewControllerWithIdentifier("textViewerCVC") as! textViewerCVC
+        let controller : textViewerCVC = storyBoard.instantiateViewController(withIdentifier: "textViewerCVC") as! textViewerCVC
         controller.operation = "Create"
         
-        self.presentViewController(controller, animated: true, completion: nil)
+        self.present(controller, animated: true, completion: nil)
     }
     
     
