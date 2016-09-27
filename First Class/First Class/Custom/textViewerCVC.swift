@@ -31,6 +31,9 @@ class textViewerCVC: UIViewController {
             readFile()
         }
 
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
     override func didReceiveMemoryWarning() {
@@ -94,6 +97,12 @@ class textViewerCVC: UIViewController {
         return plistPathInDocument
 
     }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        self.view.endEditing(true)
+    }
+
 }
 
 extension textViewerCVC : UITextFieldDelegate{
@@ -113,28 +122,47 @@ extension textViewerCVC : UITextFieldDelegate{
         return true
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.resignFirstResponder()
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // This is the point to scroll
+        let scrollPoint = CGPoint(x: 0, y: textField.frame.origin.y)
+        self.MyScrollView.setContentOffset(scrollPoint, animated: true)
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // Scroll back
+        self.MyScrollView.setContentOffset(CGPoint.zero, animated: true)
+    }
     
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0{
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y != 0{
+                self.view.frame.origin.y += keyboardSize.height
+            }
+        }
+    }
+
 }
 
 extension textViewerCVC : UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        
-        let containerText = textView.text
-        
-        if(containerText == "Your Text Here..."){
-            textView.text.removeAll()
-        }
+        let scrollPoint = CGPoint(x: 0, y: textView.frame.origin.y)
+        self.MyScrollView.setContentOffset(scrollPoint, animated: true)
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        self.MyScrollView.setContentOffset(CGPoint.zero, animated: true)
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if (text == "\n") {
-            saveNote("Create" as AnyObject)
-        }
         return true
     }
 
