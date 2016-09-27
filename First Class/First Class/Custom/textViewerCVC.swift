@@ -22,14 +22,18 @@ class textViewerCVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sectionName.becomeFirstResponder()
         
         self.sectionName.text = section
         self.fileName.text = file
 
         if operation != "Create" {
+            fileName.isUserInteractionEnabled = false
+            sectionName.isUserInteractionEnabled = false
+            myContent.becomeFirstResponder()
             readFile()
         }
+        
+        sectionName.becomeFirstResponder()
 
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
@@ -124,8 +128,11 @@ extension textViewerCVC : UITextFieldDelegate{
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // This is the point to scroll
-        let scrollPoint = CGPoint(x: 0, y: textField.frame.origin.y)
-        self.MyScrollView.setContentOffset(scrollPoint, animated: true)
+        
+        if(textField == fileName){
+            let scrollPoint = CGPoint(x: 0, y: textField.frame.origin.y)
+            self.MyScrollView.setContentOffset(scrollPoint, animated: true)
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -154,8 +161,25 @@ extension textViewerCVC : UITextFieldDelegate{
 extension textViewerCVC : UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        let scrollPoint = CGPoint(x: 0, y: textView.frame.origin.y)
-        self.MyScrollView.setContentOffset(scrollPoint, animated: true)
+        
+        let containerText = textView.text
+        
+        if(containerText == "Your Text Here..."){
+            textView.text.removeAll()
+        }
+        
+        if(UIDeviceOrientationIsLandscape(UIDevice.current.orientation))
+        {
+            let scrollPoint = CGPoint(x: 0, y: (textView.frame.origin.y) - 0)
+            self.MyScrollView.setContentOffset(scrollPoint, animated: true)
+        }
+        else
+        {
+            let scrollPoint = CGPoint(x: 0, y: (textView.frame.origin.y) - 60)
+            self.MyScrollView.setContentOffset(scrollPoint, animated: true)
+        }
+
+        
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

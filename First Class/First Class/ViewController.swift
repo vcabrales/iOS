@@ -145,42 +145,57 @@ extension ViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             
-            // handle delete (by removing the data from your array and updating the tableview)
-            let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
-            let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
+            let myQuestion = UIAlertController(title: "Delete", message: "Are you sure you want to permanently delete this file?", preferredStyle: UIAlertControllerStyle.alert)
             
-            let filePath = Utilities.getFilePath("\(arrayForSection[(indexPath as NSIndexPath).row]).strings")
-            let fileManager = FileManager.default
-            
-            // creating a .string file in the Documents folder
-            var isDirectory: ObjCBool = false
-            if fileManager.fileExists(atPath: filePath.absoluteString, isDirectory: &isDirectory) {
-                let url = URL(fileURLWithPath: filePath.absoluteString)
-                do {
-                    try fileManager.removeItem(at: url)
-                    
-                    var titlesArray : [String]
-                    titlesArray = [String]()
-                    
-                    let oldTitlesArray = arrayForSection
-                    
-                    if oldTitlesArray.count == 1 {
-                        Utilities.dictionary.removeObject(forKey: sectionKey)
-                    } else {
-                        for title in oldTitlesArray {
-                            if title != arrayForSection[(indexPath as NSIndexPath).row] {
-                                titlesArray.append(title)
+                myQuestion.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: { (action: UIAlertAction!) in
+                
+                    // handle delete (by removing the data from your array and updating the tableview)
+                    let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
+                    let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
+                
+                    let filePath = Utilities.getFilePath("\(arrayForSection[(indexPath as NSIndexPath).row]).strings")
+                    let fileManager = FileManager.default
+                
+                    // creating a .string file in the Documents folder
+                    var isDirectory: ObjCBool = false
+                    if fileManager.fileExists(atPath: filePath.absoluteString, isDirectory: &isDirectory)
+                    {
+                        let url = URL(fileURLWithPath: filePath.absoluteString)
+                        do {
+                            try fileManager.removeItem(at: url)
+                        
+                            var titlesArray : [String]
+                            titlesArray = [String]()
+                        
+                            let oldTitlesArray = arrayForSection
+                        
+                            if oldTitlesArray.count == 1 {
+                                Utilities.dictionary.removeObject(forKey: sectionKey)
+                            } else {
+                                for title in oldTitlesArray {
+                                    if title != arrayForSection[(indexPath as NSIndexPath).row] {
+                                        titlesArray.append(title)
+                                    }
+                                }
+                                Utilities.dictionary.setValue(titlesArray, forKey: sectionKey)
                             }
+                        
+                            Utilities.createMenu()
+                            self.myTable.reloadData()
+                        } catch {
+                            print(error)
                         }
-                        Utilities.dictionary.setValue(titlesArray, forKey: sectionKey)
                     }
-                    
-                    Utilities.createMenu()
-                    self.myTable.reloadData()
-                } catch {
-                    print(error)
-                }
-            }
+            }))
+            
+            myQuestion.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action: UIAlertAction!) in
+                self.myTable.reloadData()
+            }))
+            
+            present(myQuestion, animated: true, completion: nil)
+            
+            
+            
             
         }
     }
@@ -199,6 +214,6 @@ extension ViewController : UITableViewDataSource {
 
 extension ViewController : UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("test")
+
     }
 }
