@@ -13,8 +13,6 @@ class ViewController: UIViewController{
 
     @IBOutlet weak var myTable: UITableView!
     @IBOutlet weak var myScrollview: UIScrollView!
-    
-    //var dictionary : NSMutableDictionary = [:]
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,7 +87,6 @@ class ViewController: UIViewController{
 
 extension ViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let currentCell : customTVC = tableView.cellForRowAtIndexPath(indexPath) as! customTVC
         tableView.deselectRow(at: indexPath, animated: true)
         
         let sectionName : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
@@ -100,8 +97,6 @@ extension ViewController : UITableViewDelegate {
         
         controller.file = cellTitle
         controller.section = sectionName
-        
-        //controller.parentViewController = self
         
         self.present(controller, animated: true, completion: nil)
         
@@ -148,7 +143,6 @@ extension ViewController : UITableViewDataSource {
             let myQuestion = UIAlertController(title: "Delete", message: "Are you sure you want to permanently delete this file?", preferredStyle: UIAlertControllerStyle.alert)
             
                 myQuestion.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: { (action: UIAlertAction!) in
-                
                     // handle delete (by removing the data from your array and updating the tableview)
                     let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
                     let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
@@ -193,10 +187,6 @@ extension ViewController : UITableViewDataSource {
             }))
             
             present(myQuestion, animated: true, completion: nil)
-            
-            
-            
-            
         }
     }
 

@@ -13,7 +13,7 @@ class customTVC: UITableViewCell {
     
     @IBOutlet weak var myImage: UIImageView!
     @IBOutlet weak var myTitle: UILabel!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

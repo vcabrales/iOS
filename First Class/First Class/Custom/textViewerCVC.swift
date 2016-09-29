@@ -27,8 +27,6 @@ class textViewerCVC: UIViewController {
         self.fileName.text = file
 
         if operation != "Create" {
-            fileName.isUserInteractionEnabled = false
-            sectionName.isUserInteractionEnabled = false
             myContent.becomeFirstResponder()
             readFile()
         }
@@ -58,9 +56,8 @@ class textViewerCVC: UIViewController {
             print(error)
         }
         
+        var titlesArray : [String]
         if(operation == "Create"){
-            let controller = self.presentingViewController as! ViewController
-            var titlesArray : [String]
             if Utilities.dictionary[self.sectionName.text!] != nil {
                 titlesArray = Utilities.dictionary[self.sectionName.text!] as! [String]
             } else {
@@ -69,10 +66,50 @@ class textViewerCVC: UIViewController {
 
             titlesArray.append(self.fileName.text!)
             Utilities.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
-            print(Utilities.dictionary)
-            controller.reloadData()
-            Utilities.createMenu()
+        } else if self.section != self.sectionName.text {
+            var oldTitlesArray : [String]
+
+            //Moving title from Section
+            oldTitlesArray = [String]()
+
+            let arrayForSection : [String]    = Utilities.dictionary[self.section!] as! [String]
+            
+            for title in arrayForSection {
+                if title != self.file {
+                    oldTitlesArray.append(title)
+                }
+            }
+            //Setting the array back without the edited title
+            Utilities.dictionary.setValue(oldTitlesArray, forKey: self.section!)
+            
+            //Add the title to the new Section
+            if Utilities.dictionary[self.sectionName.text!] != nil {
+                titlesArray = Utilities.dictionary[self.sectionName.text!] as! [String]
+            } else {
+                titlesArray = [String]()
+            }
+            titlesArray.append(self.fileName.text!)
+            Utilities.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
+        } else if self.file != self.fileName.text {
+            //Just rename the Title
+            titlesArray = [String]()
+
+            let arrayForSection : [String]    = Utilities.dictionary[self.section!] as! [String]
+
+            //Renaming title from Section
+            for title in arrayForSection {
+                if title != self.fileName.text {
+                    titlesArray.append(title)
+                } else {
+                    titlesArray.append(self.fileName.text!)
+                }
+            }
+            Utilities.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
         }
+        
+        let controller = self.presentingViewController as! ViewController
+        controller.reloadData()
+        Utilities.createMenu()
         
         operation = ""
         
