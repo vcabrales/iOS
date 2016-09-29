@@ -191,7 +191,7 @@ extension ViewController : UITableViewDataSource {
             }))
             
             myQuestion.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action: UIAlertAction!) in
-                //self.myTable.reloadData()
+                self.myTable.reloadData()
             }))
             
             present(myQuestion, animated: true, completion: nil)
