@@ -80,7 +80,11 @@ class textViewerCVC: UIViewController {
                 }
             }
             //Setting the array back without the edited title
-            Utilities.dictionary.setValue(oldTitlesArray, forKey: self.section!)
+            if oldTitlesArray.count == 0 {
+                Utilities.dictionary.removeObject(forKey: self.section!)
+            } else {
+                Utilities.dictionary.setValue(oldTitlesArray, forKey: self.section!)
+            }
             
             //Add the title to the new Section
             if Utilities.dictionary[self.sectionName.text!] != nil {
@@ -104,7 +108,7 @@ class textViewerCVC: UIViewController {
                     titlesArray.append(self.fileName.text!)
                 }
             }
-            Utilities.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
+            Utilities.dictionary.setValue(titlesArray, forKey: self.section!)
         }
         
         let controller = self.presentingViewController as! ViewController
