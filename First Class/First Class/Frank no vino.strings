@@ -1,9 +1,0 @@
-/* 
-  Third.strings
-  First Class
-
-  Created by Victor Cabrales on 9/3/16.
-  Copyright © 2016 Victor Cabrales. All rights reserved.
-*/
-
-"tipos de nulo \n nil         —— todo los objetos bajo el comando del sistema operativo\nNil         ——Aplica para clases y es solo solo soportado por objetive - C\nNSNUll     —— representation de\n vacio.\nNull        —— tul para todo lo heredado de C\nOpcionales\n\nlet myString    : String — puede ser nulo (lo mismo que declarar el “?”)\nlet myString2    : String!  — tienes que\ninicializarlo\nlet myString    : String? — puede ser nulo\n\nDelegado es un protocolo donde le dices que métodos vas a tener que implementar (igual que una interfaz)"
