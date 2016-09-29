@@ -110,8 +110,8 @@ extension ViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionKey : String = Utilities.dictionary.allKeys[section] as! String //
-        let arrayForSection     = Utilities.dictionary[sectionKey] //White belt, etc...
+        let sectionKey : String = Utilities.dictionary.allKeys[section] as! String
+        let arrayForSection     = Utilities.dictionary[sectionKey]
         
         return (arrayForSection! as AnyObject).count
     }
@@ -124,6 +124,8 @@ extension ViewController : UITableViewDataSource {
 
         cell.myImage.image = UIImage(named : "icon")
         cell.myTitle.text = arrayForSection[(indexPath as NSIndexPath).row]
+        
+        cell.myContent.text = Utilities.readFile(arrayForSection[(indexPath as NSIndexPath).row])
 
         return cell
     }

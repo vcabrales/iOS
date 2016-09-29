@@ -154,5 +154,30 @@ class Utilities{
         createJSONMenu(jsonData)
     }
     
+    static func readFile(_ file : String) -> String{
+        //_ file : String) -> URL
+        let pathForTheFile = getFilePathToRead(file)
+        
+        do{
+            let contents = try NSString(contentsOfFile: pathForTheFile, encoding: String.Encoding.ascii.rawValue) as String
+            //self.myContent.text = contents
+            return contents
+        }catch{
+            print(error)
+        }
+        return "Error"
+    }
+    
+    static func getFilePathToRead(_ file : String) -> String {
+        var plistPathInDocument:String = String()
+        
+        let rootPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, .userDomainMask, true)[0]
+        
+        plistPathInDocument = rootPath + ("/" + (file) + ".strings")
+        
+        return plistPathInDocument
+        
+    }
+    
     
 }
