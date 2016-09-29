@@ -163,12 +163,10 @@ extension ViewController : UITableViewDataSource {
                             var titlesArray : [String]
                             titlesArray = [String]()
                         
-                            let oldTitlesArray = arrayForSection
-                        
-                            if oldTitlesArray.count == 1 {
+                            if arrayForSection.count == 1 {
                                 Utilities.dictionary.removeObject(forKey: sectionKey)
                             } else {
-                                for title in oldTitlesArray {
+                                for title in arrayForSection {
                                     if title != arrayForSection[(indexPath as NSIndexPath).row] {
                                         titlesArray.append(title)
                                     }
@@ -177,7 +175,15 @@ extension ViewController : UITableViewDataSource {
                             }
                         
                             Utilities.createMenu()
-                            self.myTable.reloadData()
+                            tableView.beginUpdates()
+                            tableView.deleteRows(at: [indexPath], with: .fade)
+                            if arrayForSection.count == 1 {
+                                // Delete section if no more rows
+                                let indexSet = NSMutableIndexSet()
+                                indexSet.add(indexPath.section)
+                                tableView.deleteSections(indexSet as IndexSet, with: .fade)
+                            }
+                            tableView.endUpdates()
                         } catch {
                             print(error)
                         }
@@ -185,7 +191,7 @@ extension ViewController : UITableViewDataSource {
             }))
             
             myQuestion.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action: UIAlertAction!) in
-                self.myTable.reloadData()
+                //self.myTable.reloadData()
             }))
             
             present(myQuestion, animated: true, completion: nil)
