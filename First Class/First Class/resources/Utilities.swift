@@ -85,7 +85,6 @@ class Utilities{
         
         for section in menu {
             let name = section["Section"] as? String
-            print(name)
             let titles = section["Titles"] as? [[String: AnyObject]]
             
             var titlesArray = [String]()
@@ -105,8 +104,6 @@ class Utilities{
         
         do {
             jsonData = try JSONSerialization.data(withJSONObject: dictionaryA, options: JSONSerialization.WritingOptions.prettyPrinted)
-            // here "jsonData" is the dictionary encoded in JSON data
-            print(jsonData)
         } catch let error as NSError {
             print(error)
         }
@@ -146,7 +143,6 @@ class Utilities{
         do {
             jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions())
             let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
-            print(jsonString)
         } catch let error as NSError {
             print("Array to JSON conversion failed: \(error.localizedDescription)")
         }
