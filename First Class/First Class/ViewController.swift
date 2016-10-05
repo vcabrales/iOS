@@ -10,10 +10,10 @@ import UIKit
 import CoreText
 
 class ViewController: UIViewController{
-
+    
     @IBOutlet weak var myTable: UITableView!
     @IBOutlet weak var myScrollview: UIScrollView!
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,7 +56,7 @@ class ViewController: UIViewController{
             }
         }
     }
-
+    
     func readJSONObject(_ object: [String: AnyObject]) {
         guard let menu = object["menu"] as? [[String: AnyObject]] else { return }
         
@@ -70,9 +70,20 @@ class ViewController: UIViewController{
             }
             
             Utilities.dictionary.setValue(titlesArray, forKey: name!)
+            
+            let images = section["Images"] as? [[String: AnyObject]]
+            var imagesArray = [AnyObject]()
+            for image in images! {
+                let imageName = image["Image"] as! String
+                let titleId = image["Id"] as! String
+                print(imageName)
+                print(titleId)
+                imagesArray.append(image as AnyObject)
+            }
+            Utilities.imagesDictionary.setValue(imagesArray, forKey: name!)
         }
     }
-        
+    
     func reloadData(){
         self.myTable.reloadData()
     }
@@ -82,7 +93,7 @@ class ViewController: UIViewController{
         // Dispose of any resources that can be recreated.
     }
     
-
+    
 }
 
 extension ViewController : UITableViewDelegate {
@@ -121,12 +132,12 @@ extension ViewController : UITableViewDataSource {
         
         let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
         let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
-
+        
         cell.myImage.image = UIImage(named : "icon")
         cell.myTitle.text = arrayForSection[(indexPath as NSIndexPath).row]
         
         cell.myContent.text = Utilities.readFile(arrayForSection[(indexPath as NSIndexPath).row])
-
+        
         return cell
     }
     
@@ -144,50 +155,50 @@ extension ViewController : UITableViewDataSource {
             
             let myQuestion = UIAlertController(title: "Delete", message: "Are you sure you want to permanently delete this file?", preferredStyle: UIAlertControllerStyle.alert)
             
-                myQuestion.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: { (action: UIAlertAction!) in
-                    // handle delete (by removing the data from your array and updating the tableview)
-                    let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
-                    let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
+            myQuestion.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: { (action: UIAlertAction!) in
+                // handle delete (by removing the data from your array and updating the tableview)
+                let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
+                let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
                 
-                    let filePath = Utilities.getFilePath("\(arrayForSection[(indexPath as NSIndexPath).row]).strings")
-                    let fileManager = FileManager.default
+                let filePath = Utilities.getFilePath("\(arrayForSection[(indexPath as NSIndexPath).row]).strings")
+                let fileManager = FileManager.default
                 
-                    // creating a .string file in the Documents folder
-                    var isDirectory: ObjCBool = false
-                    if fileManager.fileExists(atPath: filePath.absoluteString, isDirectory: &isDirectory)
-                    {
-                        let url = URL(fileURLWithPath: filePath.absoluteString)
-                        do {
-                            try fileManager.removeItem(at: url)
+                // creating a .string file in the Documents folder
+                var isDirectory: ObjCBool = false
+                if fileManager.fileExists(atPath: filePath.absoluteString, isDirectory: &isDirectory)
+                {
+                    let url = URL(fileURLWithPath: filePath.absoluteString)
+                    do {
+                        try fileManager.removeItem(at: url)
                         
-                            var titlesArray : [String]
-                            titlesArray = [String]()
+                        var titlesArray : [String]
+                        titlesArray = [String]()
                         
-                            if arrayForSection.count == 1 {
-                                Utilities.dictionary.removeObject(forKey: sectionKey)
-                            } else {
-                                for title in arrayForSection {
-                                    if title != arrayForSection[(indexPath as NSIndexPath).row] {
-                                        titlesArray.append(title)
-                                    }
+                        if arrayForSection.count == 1 {
+                            Utilities.dictionary.removeObject(forKey: sectionKey)
+                        } else {
+                            for title in arrayForSection {
+                                if title != arrayForSection[(indexPath as NSIndexPath).row] {
+                                    titlesArray.append(title)
                                 }
-                                Utilities.dictionary.setValue(titlesArray, forKey: sectionKey)
                             }
-                        
-                            Utilities.createMenu()
-                            tableView.beginUpdates()
-                            tableView.deleteRows(at: [indexPath], with: .fade)
-                            if arrayForSection.count == 1 {
-                                // Delete section if no more rows
-                                let indexSet = NSMutableIndexSet()
-                                indexSet.add(indexPath.section)
-                                tableView.deleteSections(indexSet as IndexSet, with: .fade)
-                            }
-                            tableView.endUpdates()
-                        } catch {
-                            print(error)
+                            Utilities.dictionary.setValue(titlesArray, forKey: sectionKey)
                         }
+                        
+                        Utilities.createMenu()
+                        tableView.beginUpdates()
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                        if arrayForSection.count == 1 {
+                            // Delete section if no more rows
+                            let indexSet = NSMutableIndexSet()
+                            indexSet.add(indexPath.section)
+                            tableView.deleteSections(indexSet as IndexSet, with: .fade)
+                        }
+                        tableView.endUpdates()
+                    } catch {
+                        print(error)
                     }
+                }
             }))
             
             myQuestion.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action: UIAlertAction!) in
@@ -197,7 +208,7 @@ extension ViewController : UITableViewDataSource {
             present(myQuestion, animated: true, completion: nil)
         }
     }
-
+    
     
     @IBAction func addNote(_ sender: AnyObject) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -212,6 +223,6 @@ extension ViewController : UITableViewDataSource {
 
 extension ViewController : UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
+        
     }
 }
