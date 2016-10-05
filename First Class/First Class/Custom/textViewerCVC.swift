@@ -240,6 +240,10 @@ extension textViewerCVC : UICollectionViewDelegate {
         return images.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        print("selection")
+        print(indexPath.row)
+    }
 }
 
 
@@ -254,5 +258,21 @@ extension textViewerCVC : UICollectionViewDataSource{
         
         return cell
     }
+}
+
+extension textViewerCVC : UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.width / 4) - 1
+        
+        return CGSize(width: width, height: width)
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1.2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1.2
+    }
+
 }
