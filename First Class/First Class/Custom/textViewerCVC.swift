@@ -241,22 +241,10 @@ extension textViewerCVC : UICollectionViewDelegate {
         return images.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         print("selection")
         print(indexPath.item)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        // handle tap events
-        print("You selected cell #\(indexPath.item)!")
-    }
-    
-    //func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-      //  let cell = collectionView.cellForItem(at: indexPath)
-        //cell?.backgroundColor = UIColor.black
-    //}
-
-    
+    }    
 }
 
 
@@ -266,11 +254,7 @@ extension textViewerCVC : UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as UICollectionViewCell
         
         let image = cell.viewWithTag(5) as! UIImageView
-        
-        if(indexPath.row <= 5){
-            image.image = images[indexPath.row]
-        }
-        
+        image.image = images[indexPath.row]
         
         return cell
     }
