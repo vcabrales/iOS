@@ -137,17 +137,7 @@ extension ViewController : UITableViewDataSource {
 
         cell.myTitle.text = arrayForSection[(indexPath as NSIndexPath).row]
         cell.myContent.text = Utilities.readFile(arrayForSection[(indexPath as NSIndexPath).row])        
-        cell.myImage.image = Utilities.images[indexPath.row] as! UIImage
-        
-        
-        /*
-        let imagesArrayForSection : [[String: AnyObject]]   = Utilities.imagesDictionary[sectionKey] as! [[String: AnyObject]]
-        for image in imagesArrayForSection {
-            if image["Id"] as! String == cell.myTitle.text {
-                cell.myImage.image = UIImage(named : image["Image"] as! String)
-            }
-        }
-         */
+        cell.myImage.image = Utilities.images[indexPath.row] as? UIImage
                 
         return cell
     }
