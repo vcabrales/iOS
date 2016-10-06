@@ -11,6 +11,7 @@ import Foundation
 class Utilities{
     
     static var dictionary : NSMutableDictionary = NSMutableDictionary()
+    static var imagesDictionary : NSMutableDictionary = NSMutableDictionary()
     
     static func getFilePath(_ file : String) -> URL {
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -54,8 +55,6 @@ class Utilities{
         } catch let error as NSError {
             print("Couldn't write to file: \(error.localizedDescription)")
         }
-        
-        //readURLFile(jsonFilePath)
     }
     
     //This Function is to read our URL with our JSONMenu
@@ -92,9 +91,16 @@ class Utilities{
             for title in titles! {
                 titlesArray.append(title["Title"] as! String)
             }
+            
             self.dictionary.setValue(titlesArray, forKey: name!)
             
-            //parseDictionary(self.dictionary)
+            let images = section["Images"] as? [[String: AnyObject]]
+            for image in images! {
+                let imageName = image["Image"] as! String
+                let titleId = image["Id"] as! String
+                print(imageName)
+                print(titleId)
+            }
         }
     }
     
@@ -116,6 +122,18 @@ class Utilities{
         var menu : [[String: AnyObject]] = []
         
         for section in self.dictionary.allKeys {
+            
+            var images : [[String: AnyObject]] = []
+            let imagesArrayForSection : [AnyObject]    = self.imagesDictionary[section as! String] as! [AnyObject]
+            
+            for image in imagesArrayForSection {
+                let i : [String : String] = [
+                    "Id" : image["Id"] as! String
+                    ,"Image" : image["Image"] as! String
+                ]
+                images.append(i as [String : AnyObject])
+            }
+            
             var titles : [[String: AnyObject]] = []
             let arrayForSection : [String]    = self.dictionary[section as! String] as! [String]
             
@@ -129,6 +147,7 @@ class Utilities{
             let s : [String : AnyObject] = [
                 "Section" : section as! String as AnyObject
                 ,"Titles" : titles as AnyObject
+                ,"Images" : images as AnyObject
             ]
             
             menu.append(s)
@@ -142,7 +161,6 @@ class Utilities{
         var jsonData: Data!
         do {
             jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions())
-            let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
         } catch let error as NSError {
             print("Array to JSON conversion failed: \(error.localizedDescription)")
         }
@@ -156,7 +174,6 @@ class Utilities{
         
         do{
             let contents = try NSString(contentsOfFile: pathForTheFile, encoding: String.Encoding.ascii.rawValue) as String
-            //self.myContent.text = contents
             return contents
         }catch{
             print(error)
