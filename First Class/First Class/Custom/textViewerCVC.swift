@@ -59,14 +59,14 @@ class textViewerCVC: UIViewController {
         }
         
         var titlesArray : [String]
-        var imagesArray : [AnyObject]
+        var imagesArray : [[String : String]]
         if(operation == "Create"){
             if Utilities.dictionary[self.sectionName.text!] != nil {
                 titlesArray = Utilities.dictionary[self.sectionName.text!] as! [String]
-                imagesArray = Utilities.imagesDictionary[self.sectionName.text!] as! [AnyObject]
+                imagesArray = Utilities.imagesDictionary[self.sectionName.text!] as! [[String : String]]
             } else {
                 titlesArray = [String]()
-                imagesArray = [AnyObject]()
+                imagesArray = [[String : String]]()
             }
 
             titlesArray.append(self.fileName.text!)
@@ -76,36 +76,62 @@ class textViewerCVC: UIViewController {
                 "Id" : self.fileName.text!
                 ,"Image" : self.currentImage!
             ]
-            imagesArray.append(img as AnyObject)
+            imagesArray.append(img)
             Utilities.imagesDictionary.setValue(imagesArray, forKey: self.sectionName.text!)
         } else if self.section != self.sectionName.text {
             var oldTitlesArray : [String]
+            var oldImagesArray : [[String : String]]
 
             //Moving title from Section
             oldTitlesArray = [String]()
+            oldImagesArray = [[String : String]]()
 
             let arrayForSection : [String]    = Utilities.dictionary[self.section!] as! [String]
+            let imagesArrayForSection : [[String : String]]   = Utilities.imagesDictionary[self.section!] as! [[String : String]]
             
             for title in arrayForSection {
                 if title != self.file {
                     oldTitlesArray.append(title)
                 }
             }
+            
+            for image in imagesArrayForSection {
+                if image["Id"] != self.file {
+                    let i : [String : String] = [
+                        "Id" : image["Id"]!
+                        ,"Image" : image["Image"]!
+                    ]
+                    oldImagesArray.append(i)
+                }
+            }
+            
             //Setting the array back without the edited title
             if oldTitlesArray.count == 0 {
                 Utilities.dictionary.removeObject(forKey: self.section!)
+                Utilities.imagesDictionary.removeObject(forKey: self.section!)
             } else {
                 Utilities.dictionary.setValue(oldTitlesArray, forKey: self.section!)
+                Utilities.imagesDictionary.setValue(oldImagesArray, forKey: self.section!)
             }
             
             //Add the title to the new Section
             if Utilities.dictionary[self.sectionName.text!] != nil {
                 titlesArray = Utilities.dictionary[self.sectionName.text!] as! [String]
+                imagesArray = Utilities.imagesDictionary[self.sectionName.text!] as! [[String : String]]
             } else {
                 titlesArray = [String]()
+                imagesArray = [[String : String]]()
             }
             titlesArray.append(self.fileName.text!)
             Utilities.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
+            
+            let i : [String : String] = [
+                "Id" : self.fileName.text!
+                ,"Image" : self.currentImage!
+            ]
+            imagesArray.append(i)
+            Utilities.imagesDictionary.setValue(imagesArray, forKey: self.sectionName.text!)
+            
         } else if self.file != self.fileName.text {
             //Just rename the Title
             titlesArray = [String]()
