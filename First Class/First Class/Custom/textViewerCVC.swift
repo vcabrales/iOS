@@ -251,10 +251,10 @@ extension textViewerCVC : UICollectionViewDelegate {
         return images.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         print("selection")
-        print(indexPath.row)
-    }
+        print(indexPath.item)
+    }    
 }
 
 
