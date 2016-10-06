@@ -184,9 +184,13 @@ extension ViewController : UITableViewDataSource {
                         
                             var titlesArray : [String]
                             titlesArray = [String]()
+                            
+                            var imagesArray : [[String : String]]
+                            imagesArray = [[String : String]]()
                         
                             if arrayForSection.count == 1 {
                                 Utilities.dictionary.removeObject(forKey: sectionKey)
+                                Utilities.imagesDictionary.removeObject(forKey: sectionKey)
                             } else {
                                 for title in arrayForSection {
                                     if title != arrayForSection[(indexPath as NSIndexPath).row] {
@@ -194,6 +198,19 @@ extension ViewController : UITableViewDataSource {
                                     }
                                 }
                                 Utilities.dictionary.setValue(titlesArray, forKey: sectionKey)
+                                
+                                let imagesArrayForSection : [AnyObject] = Utilities.imagesDictionary[sectionKey] as! [AnyObject]
+                                
+                                for image in imagesArrayForSection {
+                                    if image["Id"] as! String != arrayForSection[(indexPath as NSIndexPath).row] {
+                                        let i : [String : String] = [
+                                            "Id" : image["Id"] as! String
+                                            ,"Image" : image["Image"] as! String
+                                        ]
+                                        imagesArray.append(i as [String : String])
+                                    }
+                                }
+                                Utilities.imagesDictionary.setValue(imagesArray, forKey: sectionKey)
                             }
                         
                             Utilities.createMenu()
