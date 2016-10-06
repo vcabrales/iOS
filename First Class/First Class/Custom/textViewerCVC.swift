@@ -265,7 +265,7 @@ extension textViewerCVC : UICollectionViewDataSource{
         
         let image = cell.viewWithTag(5) as! UIImageView
         image.image = images[indexPath.row]
-        
+        image.accessibilityIdentifier = "\(indexPath.row)"
         
         return cell
     }
