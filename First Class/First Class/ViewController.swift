@@ -138,7 +138,8 @@ extension ViewController : UITableViewDataSource {
         cell.myTitle.text = arrayForSection[(indexPath as NSIndexPath).row]
         cell.myContent.text = Utilities.readFile(arrayForSection[(indexPath as NSIndexPath).row])        
         cell.myImage.image = Utilities.images[indexPath.row] as? UIImage
-                
+        self.myTable.estimatedRowHeight = 200
+        self.myTable.rowHeight          = UITableViewAutomaticDimension
         return cell
     }
     
