@@ -94,13 +94,17 @@ class Utilities{
             
             self.dictionary.setValue(titlesArray, forKey: name!)
             
+            var imagesArray : [[String: AnyObject]] = []
             let images = section["Images"] as? [[String: AnyObject]]
             for image in images! {
-                let imageName = image["Image"] as! String
-                let titleId = image["Id"] as! String
-                print(imageName)
-                print(titleId)
+                let i : [String : String] = [
+                    "Id" : image["Id"] as! String
+                    ,"Image" : image["Image"] as! String
+                ]
+                imagesArray.append(i as [String : AnyObject])
             }
+            
+            self.imagesDictionary.setValue(imagesArray, forKey: name!)
         }
     }
     

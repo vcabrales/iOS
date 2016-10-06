@@ -20,6 +20,7 @@ class textViewerCVC: UIViewController {
     var section : String?
     var operation : String?
     var images = [#imageLiteral(resourceName: "document"), #imageLiteral(resourceName: "mail"), #imageLiteral(resourceName: "tablet"), #imageLiteral(resourceName: "user-1"), #imageLiteral(resourceName: "cloud-computing")]
+    var currentImage : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +74,7 @@ class textViewerCVC: UIViewController {
             
             let img : [String : String] = [
                 "Id" : self.fileName.text!
-                ,"Image" : "icon"
+                ,"Image" : self.currentImage!
             ]
             imagesArray.append(img as AnyObject)
             Utilities.imagesDictionary.setValue(imagesArray, forKey: self.sectionName.text!)
@@ -252,8 +253,7 @@ extension textViewerCVC : UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        print("selection")
-        print(indexPath.item)
+        self.currentImage = images[indexPath.row].accessibilityIdentifier
     }    
 }
 
@@ -265,7 +265,7 @@ extension textViewerCVC : UICollectionViewDataSource{
         
         let image = cell.viewWithTag(5) as! UIImageView
         image.image = images[indexPath.row]
-        image.accessibilityIdentifier = "\(indexPath.row)"
+        images[indexPath.row].accessibilityIdentifier = "\(indexPath.row)"
         
         return cell
     }
