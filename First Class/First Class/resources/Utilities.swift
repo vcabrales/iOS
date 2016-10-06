@@ -12,6 +12,7 @@ class Utilities{
     
     static var dictionary : NSMutableDictionary = NSMutableDictionary()
     static var imagesDictionary : NSMutableDictionary = NSMutableDictionary()
+    static var images = [AnyObject]()
     
     static func getFilePath(_ file : String) -> URL {
         let documentsDirectoryPathString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!

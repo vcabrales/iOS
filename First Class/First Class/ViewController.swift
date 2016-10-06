@@ -16,6 +16,7 @@ class ViewController: UIViewController{
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        Utilities.images = [#imageLiteral(resourceName: "document"), #imageLiteral(resourceName: "mail"), #imageLiteral(resourceName: "tablet"), #imageLiteral(resourceName: "user-1"), #imageLiteral(resourceName: "cloud-computing")]
         
         myScrollview.contentSize.height = 1000
         
@@ -135,8 +136,10 @@ extension ViewController : UITableViewDataSource {
         let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
 
         cell.myTitle.text = arrayForSection[(indexPath as NSIndexPath).row]
-        cell.myContent.text = Utilities.readFile(arrayForSection[(indexPath as NSIndexPath).row])
-
+        cell.myContent.text = Utilities.readFile(arrayForSection[(indexPath as NSIndexPath).row])        
+        cell.myImage.image = Utilities.images[indexPath.row] as! UIImage
+        
+        
         /*
         let imagesArrayForSection : [[String: AnyObject]]   = Utilities.imagesDictionary[sectionKey] as! [[String: AnyObject]]
         for image in imagesArrayForSection {
