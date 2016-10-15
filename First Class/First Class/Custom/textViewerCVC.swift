@@ -15,6 +15,15 @@ class textViewerCVC: UIViewController {
     @IBOutlet weak var myContent: UITextView!
     @IBOutlet weak var sectionName: UITextField!
     @IBOutlet weak var fileName: UITextField!
+    
+    var imagePicker : UIImagePickerController?
+    
+    
+    @IBAction func test(_ sender: UIButton) {
+        self.imagePicker?.sourceType = .photoLibrary
+        
+        self.present(imagePicker!, animated: true, completion: nil)
+    }
 
     var file : String?
     var section : String?
@@ -25,6 +34,8 @@ class textViewerCVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.imagePicker =  UIImagePickerController()
+        self.imagePicker?.delegate = self
         self.sectionName.text = section
         self.fileName.text = file
 
@@ -280,7 +291,11 @@ extension textViewerCVC : UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         self.currentImage = images[indexPath.row].accessibilityIdentifier
-    }    
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("entre puto")
+    }
 }
 
 
@@ -312,4 +327,18 @@ extension textViewerCVC : UICollectionViewDelegateFlowLayout{
         return 1.2
     }
 
+}
+
+extension textViewerCVC : UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        print("didFinishPickingMediaWithInfo")
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("imagePickerControllerDidCancel")
+    }
+}
+
+extension textViewerCVC : UINavigationControllerDelegate {
+    
 }
