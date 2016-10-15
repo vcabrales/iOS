@@ -83,11 +83,14 @@ class textViewerCVC: UIViewController {
             titlesArray.append(self.fileName.text!)
             Utilities.dictionary.setValue(titlesArray, forKey: self.sectionName.text!)
             
-            let img : [String : String] = [
-                "Id" : self.fileName.text!
-                ,"Image" : self.currentImage!
-            ]
-            imagesArray.append(img)
+            if let selectedImage = self.currentImage {
+                let img : [String : String] = [
+                    "Id" : self.fileName.text!
+                    ,"Image" : selectedImage
+                ]
+                imagesArray.append(img)
+            }
+            
             Utilities.imagesDictionary.setValue(imagesArray, forKey: self.sectionName.text!)
         } else if self.section != self.sectionName.text {
             var oldTitlesArray : [String]

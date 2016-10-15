@@ -85,10 +85,9 @@ class Utilities{
         
         for section in menu {
             let name = section["Section"] as? String
+            
             let titles = section["Titles"] as? [[String: AnyObject]]
-            
             var titlesArray = [String]()
-            
             for title in titles! {
                 titlesArray.append(title["Title"] as! String)
             }
@@ -96,16 +95,17 @@ class Utilities{
             self.dictionary.setValue(titlesArray, forKey: name!)
             
             var imagesArray : [[String: AnyObject]] = []
-            let images = section["Images"] as? [[String: AnyObject]]
-            for image in images! {
-                let i : [String : String] = [
-                    "Id" : image["Id"] as! String
-                    ,"Image" : image["Image"] as! String
-                ]
-                imagesArray.append(i as [String : AnyObject])
+            if let images = section["Images"] as? [[String: AnyObject]] {
+                for image in images {
+                    let i : [String : String] = [
+                        "Id" : image["Id"] as! String
+                        ,"Image" : image["Image"] as! String
+                    ]
+                    imagesArray.append(i as [String : AnyObject])
+                }
             }
-            
             self.imagesDictionary.setValue(imagesArray, forKey: name!)
+            
         }
     }
     

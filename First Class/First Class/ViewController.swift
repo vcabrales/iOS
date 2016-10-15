@@ -32,7 +32,7 @@ class ViewController: UIViewController{
                     do {
                         let object = try JSONSerialization.jsonObject(with: data!, options: .allowFragments)
                         if let dictionary = object as? [String: AnyObject] {
-                            readJSONObject(dictionary)
+                            Utilities.readJSONObject(dictionary)
                         }
                     } catch {
                         print("error serializing JSON: \(error)")
@@ -58,34 +58,6 @@ class ViewController: UIViewController{
         }
     }
 
-    func readJSONObject(_ object: [String: AnyObject]) {
-        guard let menu = object["menu"] as? [[String: AnyObject]] else { return }
-        
-        for section in menu {
-            let name = section["Section"] as? String
-            
-            let titles = section["Titles"] as? [[String: AnyObject]]
-            var titlesArray = [String]()
-            for title in titles! {
-                titlesArray.append(title["Title"] as! String)
-            }
-            
-            Utilities.dictionary.setValue(titlesArray, forKey: name!)
-            
-            var imagesArray : [[String: AnyObject]] = []
-            let images = section["Images"] as? [[String: AnyObject]]
-            for image in images! {
-                let i : [String : String] = [
-                    "Id" : image["Id"] as! String
-                    ,"Image" : image["Image"] as! String
-                ]
-                imagesArray.append(i as [String : AnyObject])
-            }
-            
-            Utilities.imagesDictionary.setValue(imagesArray, forKey: name!)
-        }
-    }
-        
     func reloadData(){
         self.myTable.reloadData()
     }
@@ -135,9 +107,20 @@ extension ViewController : UITableViewDataSource {
         let sectionKey : String = Utilities.dictionary.allKeys[(indexPath as NSIndexPath).section] as! String
         let arrayForSection : [String]    = Utilities.dictionary[sectionKey] as! [String]
 
-        cell.myTitle.text = arrayForSection[(indexPath as NSIndexPath).row]
-        cell.myContent.text = Utilities.readFile(arrayForSection[(indexPath as NSIndexPath).row])        
-        cell.myImage.image = Utilities.images[indexPath.row] as? UIImage
+        let title : String = arrayForSection[(indexPath as NSIndexPath).row]
+        
+        cell.myTitle.text   = title
+        cell.myContent.text = Utilities.readFile(arrayForSection[(indexPath as NSIndexPath).row])
+        
+        if let imagesArrayForSection : [[String: AnyObject]]    = Utilities.imagesDictionary[sectionKey] as? [[String: AnyObject]] {
+            for image in imagesArrayForSection {
+                if image["Id"] as! String == title {
+                    let imageIndex : String = image["Image"] as! String
+                    cell.myImage.image = Utilities.images[Int(imageIndex)!] as? UIImage
+                }
+            }
+        }
+        
         self.myTable.estimatedRowHeight = 200
         self.myTable.rowHeight          = UITableViewAutomaticDimension
         return cell
