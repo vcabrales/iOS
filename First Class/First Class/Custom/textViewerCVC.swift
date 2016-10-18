@@ -17,13 +17,6 @@ class textViewerCVC: UIViewController {
     @IBOutlet weak var fileName: UITextField!
     
     var imagePicker : UIImagePickerController?
-    
-    
-    @IBAction func test(_ sender: UIButton) {
-        self.imagePicker?.sourceType = .photoLibrary
-        
-        self.present(imagePicker!, animated: true, completion: nil)
-    }
 
     var file : String?
     var section : String?
@@ -271,8 +264,6 @@ extension textViewerCVC : UITextViewDelegate {
             let scrollPoint = CGPoint(x: 0, y: (textView.frame.origin.y) - 60)
             self.MyScrollView.setContentOffset(scrollPoint, animated: true)
         }
-
-        
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -282,22 +273,26 @@ extension textViewerCVC : UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return true
     }
-    
 
 }
 
 extension textViewerCVC : UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return images.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        self.currentImage = images[indexPath.row].accessibilityIdentifier
+        if indexPath.item == images.count{
+            self.imagePicker?.sourceType = .photoLibrary
+            self.present(imagePicker!, animated: true, completion: nil)
+        }else{
+            self.currentImage = images[indexPath.row].accessibilityIdentifier
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("entre puto")
+        print("didSelectItemAt")
     }
 }
 
@@ -308,8 +303,15 @@ extension textViewerCVC : UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as UICollectionViewCell
         
         let image = cell.viewWithTag(5) as! UIImageView
-        image.image = images[indexPath.row]
-        images[indexPath.row].accessibilityIdentifier = "\(indexPath.row)"
+        
+        if indexPath.item == images.count {
+            
+            image.image = UIImage(named: "add")
+            
+        } else {
+            image.image = images[indexPath.row]
+            images[indexPath.row].accessibilityIdentifier = "\(indexPath.row)"
+        }
         
         return cell
     }
@@ -333,12 +335,18 @@ extension textViewerCVC : UICollectionViewDelegateFlowLayout{
 }
 
 extension textViewerCVC : UIImagePickerControllerDelegate {
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("didFinishPickingMediaWithInfo")
+        
+        if let yourPickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            images.append(yourPickedImage)
+        }
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("imagePickerControllerDidCancel")
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
