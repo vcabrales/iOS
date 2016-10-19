@@ -15,14 +15,29 @@ class textViewerCVC: UIViewController {
     @IBOutlet weak var myContent: UITextView!
     @IBOutlet weak var sectionName: UITextField!
     @IBOutlet weak var fileName: UITextField!
+    @IBOutlet weak var myCollectionView : UICollectionView!
     
     var imagePicker : UIImagePickerController?
 
     var file : String?
     var section : String?
     var operation : String?
-    var images = [#imageLiteral(resourceName: "document"), #imageLiteral(resourceName: "mail"), #imageLiteral(resourceName: "tablet"), #imageLiteral(resourceName: "user-1"), #imageLiteral(resourceName: "cloud-computing")]
+    var images : [UIImage] = [UIImage]()
     var currentImage : String?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //reading image document
+        let documentsFolderPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]
+        let path = documentsFolderPath.appending(fileName.text!)
+    
+        //loading image
+        let image = UIImage(contentsOfFile: path)
+        if image == nil {
+            print("Image not available at: \(path)")
+        }
+        images.append(image!)
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -340,6 +355,17 @@ extension textViewerCVC : UIImagePickerControllerDelegate {
         
         if let yourPickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             images.append(yourPickedImage)
+            self.myCollectionView.reloadData()
+            print(yourPickedImage)
+            
+            //saving image document
+            let fileManager = FileManager.default
+            let paths       = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first)?.appending(fileName.text!)
+            let imageData   = UIImageJPEGRepresentation(yourPickedImage, 0.8)
+            fileManager.createFile(atPath: paths!, contents: imageData, attributes: nil)
+            print("the file was created at path \(paths)")
+            
+
         }
         dismiss(animated: true, completion: nil)
     }
