@@ -34,8 +34,9 @@ class textViewerCVC: UIViewController {
         let image = UIImage(contentsOfFile: path)
         if image == nil {
             print("Image not available at: \(path)")
+        }else{
+            images.append(image!)
         }
-        images.append(image!)
 
     }
     

@@ -8,15 +8,18 @@
 
 import UIKit
 import CoreText
+import CoreLocation
 
 class ViewController: UIViewController{
 
     @IBOutlet weak var myTable: UITableView!
     @IBOutlet weak var myScrollview: UIScrollView!
+    
+    var myLocationManager = CLLocationManager()
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        Utilities.images = [#imageLiteral(resourceName: "document"), #imageLiteral(resourceName: "mail"), #imageLiteral(resourceName: "tablet"), #imageLiteral(resourceName: "user-1"), #imageLiteral(resourceName: "cloud-computing")]
+        initlocationManager()
         
         myScrollview.contentSize.height = 1000
         
@@ -228,3 +231,47 @@ extension ViewController : UIScrollViewDelegate{
 
     }
 }
+
+extension ViewController : CLLocationManagerDelegate {
+    
+    
+    func initlocationManager(){
+        self.myLocationManager.delegate = self
+        self.myLocationManager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        self.verifyLocationPermission(status: status)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue: CLLocationCoordinate2D = myLocationManager.location!.coordinate
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
+    
+    func verifyLocationPermission(status: CLAuthorizationStatus?){
+        var currentStatus : CLAuthorizationStatus
+        
+        if status != nil {
+            currentStatus = status!
+        }else{
+            currentStatus = CLLocationManager.authorizationStatus()
+        }
+        
+        switch currentStatus {
+        case.notDetermined:
+            print("No determinado")
+            self.myLocationManager.requestWhenInUseAuthorization()
+        case.denied:
+            print("No denegado")
+        case.authorizedAlways:
+            print("Usar siempre")
+        case.authorizedWhenInUse:
+            print("Usar cuando este abierta")
+            self.myLocationManager.startUpdatingLocation()
+        case.restricted:
+            print("restringido")
+        }
+    }
+}
+
