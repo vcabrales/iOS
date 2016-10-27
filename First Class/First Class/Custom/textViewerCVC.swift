@@ -15,21 +15,29 @@ class textViewerCVC: UIViewController {
     @IBOutlet weak var myContent: UITextView!
     @IBOutlet weak var sectionName: UITextField!
     @IBOutlet weak var fileName: UITextField!
+    @IBOutlet weak var myCollectionView : UICollectionView!
     
     var imagePicker : UIImagePickerController?
-    
-    
-    @IBAction func test(_ sender: UIButton) {
-        self.imagePicker?.sourceType = .photoLibrary
-        
-        self.present(imagePicker!, animated: true, completion: nil)
-    }
 
     var file : String?
     var section : String?
     var operation : String?
-    var images = [#imageLiteral(resourceName: "document"), #imageLiteral(resourceName: "mail"), #imageLiteral(resourceName: "tablet"), #imageLiteral(resourceName: "user-1"), #imageLiteral(resourceName: "cloud-computing")]
+    var images : [UIImage] = [UIImage]()
     var currentImage : String?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //reading image document
+        let documentsFolderPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]
+        let path = documentsFolderPath.appending(fileName.text!)
+    
+        //loading image
+        let image = UIImage(contentsOfFile: path)
+        if image == nil {
+            print("Image not available at: \(path)")
+        }
+        images.append(image!)
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -271,8 +279,6 @@ extension textViewerCVC : UITextViewDelegate {
             let scrollPoint = CGPoint(x: 0, y: (textView.frame.origin.y) - 60)
             self.MyScrollView.setContentOffset(scrollPoint, animated: true)
         }
-
-        
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -282,22 +288,26 @@ extension textViewerCVC : UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return true
     }
-    
 
 }
 
 extension textViewerCVC : UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return images.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        self.currentImage = images[indexPath.row].accessibilityIdentifier
+        if indexPath.item == images.count{
+            self.imagePicker?.sourceType = .photoLibrary
+            self.present(imagePicker!, animated: true, completion: nil)
+        }else{
+            self.currentImage = images[indexPath.row].accessibilityIdentifier
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("entre puto")
+        print("didSelectItemAt")
     }
 }
 
@@ -308,8 +318,15 @@ extension textViewerCVC : UICollectionViewDataSource{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as UICollectionViewCell
         
         let image = cell.viewWithTag(5) as! UIImageView
-        image.image = images[indexPath.row]
-        images[indexPath.row].accessibilityIdentifier = "\(indexPath.row)"
+        
+        if indexPath.item == images.count {
+            
+            image.image = UIImage(named: "add")
+            
+        } else {
+            image.image = images[indexPath.row]
+            images[indexPath.row].accessibilityIdentifier = "\(indexPath.row)"
+        }
         
         return cell
     }
@@ -333,12 +350,29 @@ extension textViewerCVC : UICollectionViewDelegateFlowLayout{
 }
 
 extension textViewerCVC : UIImagePickerControllerDelegate {
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("didFinishPickingMediaWithInfo")
+        
+        if let yourPickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            images.append(yourPickedImage)
+            self.myCollectionView.reloadData()
+            print(yourPickedImage)
+            
+            //saving image document
+            let fileManager = FileManager.default
+            let paths       = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .allDomainsMask, true).first)?.appending(fileName.text!)
+            let imageData   = UIImageJPEGRepresentation(yourPickedImage, 0.8)
+            fileManager.createFile(atPath: paths!, contents: imageData, attributes: nil)
+            print("the file was created at path \(paths)")
+            
+
+        }
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("imagePickerControllerDidCancel")
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
