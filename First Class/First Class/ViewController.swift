@@ -16,8 +16,24 @@ class ViewController: UIViewController{
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        Utilities.images = [#imageLiteral(resourceName: "document"), #imageLiteral(resourceName: "mail"), #imageLiteral(resourceName: "tablet"), #imageLiteral(resourceName: "user-1"), #imageLiteral(resourceName: "cloud-computing")]
         
+        
+        let fileManager = FileManager.default
+        let paths       = (NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0])
+        let enumerator:FileManager.DirectoryEnumerator = fileManager.enumerator(atPath: paths)!
+        
+        while let element = enumerator.nextObject() as? String {
+            if element.hasSuffix("jpg") { // checks the extension
+                //loading image
+                let image = UIImage(contentsOfFile: "\(paths)/\(element)")
+                if image == nil {
+                    print("Image not available at: \(element)")
+                }
+                Utilities.images.append(image!)
+            }
+        }
+        
+            
         myScrollview.contentSize.height = 1000
         
         if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first
