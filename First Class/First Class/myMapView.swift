@@ -12,6 +12,10 @@ import MapKit
 class myMapView: UIViewController {
 
     @IBOutlet weak var myMap : MKMapView!
+    @IBAction func goBack(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
