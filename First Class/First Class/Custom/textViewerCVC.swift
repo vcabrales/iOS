@@ -8,11 +8,14 @@
 
 import UIKit
 
-var images : [UIImage] = [UIImage]()
 
 class textViewerCVC: UIViewController {
 
-    
+    @IBAction func myLocation(_ sender: UIButton) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let locationView : myMapView = storyBoard.instantiateViewController(withIdentifier: "myMapView") as! myMapView
+        self.present(locationView, animated: true, completion: nil)
+    }
     @IBOutlet weak var MyScrollView: UIScrollView!
     @IBOutlet weak var myContent: UITextView!
     @IBOutlet weak var sectionName: UITextField!
@@ -24,7 +27,7 @@ class textViewerCVC: UIViewController {
     var file : String?
     var section : String?
     var operation : String?
-    //var images : [UIImage] = [UIImage]()
+    var images : [UIImage] = [UIImage]()
     var currentImage : String?
     
     
@@ -42,7 +45,8 @@ class textViewerCVC: UIViewController {
                 if image == nil {
                     print("Image not available at: \(element)")
                 }
-                Utilities.images.append(image!)
+                images.append(image!)
+                self.myCollectionView.reloadData()
             }
         }
 
@@ -370,10 +374,6 @@ extension textViewerCVC : UIImagePickerControllerDelegate {
             fileManager.createFile(atPath: paths!, contents: imageData, attributes: nil)
             print("the file was created at path \(paths)")
             
-            var imagesDictionary : [String:URL] = [:]
-            imagesDictionary.updateValue(info[UIImagePickerControllerReferenceURL] as! URL, forKey: fileName.text!)
-            
-            print(imagesDictionary)
         }
         dismiss(animated: true, completion: nil)
     }

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		341D83681D96264700D7454C /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341D83671D96264700D7454C /* Utilities.swift */; };
+		82B79B361DC95C470073D01D /* myMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B79B351DC95C470073D01D /* myMapView.swift */; };
+		82F411BD1DC2BBA900E99D2D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F411BC1DC2BBA900E99D2D /* MapKit.framework */; };
+		82F411BF1DC2BC6A00E99D2D /* myPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F411BE1DC2BC6A00E99D2D /* myPin.swift */; };
 		CC00AAA41D715F6E0001A377 /* customTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00AAA31D715F6E0001A377 /* customTVC.swift */; };
 		CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA561D7138B4007ADBCF /* AppDelegate.swift */; };
 		CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC12DA581D7138B4007ADBCF /* ViewController.swift */; };
@@ -38,6 +41,9 @@
 
 /* Begin PBXFileReference section */
 		341D83671D96264700D7454C /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = resources/Utilities.swift; sourceTree = "<group>"; };
+		82B79B351DC95C470073D01D /* myMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myMapView.swift; sourceTree = "<group>"; };
+		82F411BC1DC2BBA900E99D2D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		82F411BE1DC2BC6A00E99D2D /* myPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myPin.swift; sourceTree = "<group>"; };
 		CC00AAA31D715F6E0001A377 /* customTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = customTVC.swift; path = Custom/customTVC.swift; sourceTree = "<group>"; };
 		CC12DA531D7138B4007ADBCF /* First Class.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "First Class.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC12DA561D7138B4007ADBCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82F411BD1DC2BBA900E99D2D /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +95,14 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		82F411BB1DC2BBA900E99D2D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				82F411BC1DC2BBA900E99D2D /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CC12DA4A1D7138B4007ADBCF = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +110,7 @@
 				CC12DA6A1D7138B5007ADBCF /* First ClassTests */,
 				CC12DA751D7138B5007ADBCF /* First ClassUITests */,
 				CC12DA541D7138B4007ADBCF /* Products */,
+				82F411BB1DC2BBA900E99D2D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,6 +163,8 @@
 			children = (
 				CC12DA581D7138B4007ADBCF /* ViewController.swift */,
 				CC12DAC41D78E562007ADBCF /* textViewerCVC.swift */,
+				82F411BE1DC2BC6A00E99D2D /* myPin.swift */,
+				82B79B351DC95C470073D01D /* myMapView.swift */,
 			);
 			name = "Main Views";
 			sourceTree = "<group>";
@@ -310,6 +328,8 @@
 				341D83681D96264700D7454C /* Utilities.swift in Sources */,
 				CC12DA591D7138B4007ADBCF /* ViewController.swift in Sources */,
 				CC12DA571D7138B4007ADBCF /* AppDelegate.swift in Sources */,
+				82F411BF1DC2BC6A00E99D2D /* myPin.swift in Sources */,
+				82B79B361DC95C470073D01D /* myMapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
